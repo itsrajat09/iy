@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Payment Mode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style4.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="header">
+            <div class="back-btn" onclick="history.back()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <h1 class="header-title">Choose Payment Mode</h1>
+        </header>
+
+        <div class="payment-content">
+
+            <h2 class="section-label">UPI</h2>
+            
+            <a href="index5.html" class="payment-card clickable-link card-flex-center">
+                <div class="card-left-group">
+                    <img src="phonepay.jpeg" alt="PhonePe" class="payment-logo">
+                    <span class="card-main-text">PhonePe</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-icon"></i>
+            </a>
+
+
+            <h2 class="section-label">Chartr Wallet</h2>
+
+            <div class="payment-card wallet-card-container">
+                <div class="warning-banner">
+                    Low balance!
+                </div>
+
+                <div class="wallet-inner-content">
+                    <div class="wallet-info-row">
+                        <div class="wallet-left-group">
+                            <div class="wallet-icon-box">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <div class="wallet-text-group">
+                                <div class="wallet-title">Chartr Wallet</div>
+                                <span class="instant-tag">Instant Payment</span>
+                            </div>
+                        </div>
+                        <div class="wallet-balance">₹0.0</div>
+                    </div>
+
+                    <div class="wallet-actions-row">
+                        <button class="add-money-btn">Add ₹50</button>
+                        <button class="add-money-btn">Add ₹150</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2 class="section-label">Others</h2>
+
+            <a href="#" class="payment-card clickable-link card-flex-center">
+                <div class="card-left-group">
+                    <div class="other-icon-box">
+                        <i class="fa-regular fa-credit-card"></i>
+                    </div>
+                    <span class="card-main-text">Wallet, Cards, Net Banking</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-icon"></i>
+            </a>
+
+
+            <a href="#" class="banner-link">
+                <img src="paytm.jpeg" alt="Paytm Offer Banner" class="bottom-banner-img">
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

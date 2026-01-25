@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delhi Metro Ticket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style6.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="metro-header">
+            <i class="fa-solid fa-arrow-left back-icon" onclick="history.back()"></i>
+            
+            <div class="logo-container">
+                <div class="dm-logo-circle">
+                    <div class="dm-line-top"></div>
+                    <div class="dm-line-bottom"></div>
+                    <div class="dm-cross"></div>
+                </div>
+                <div class="dm-text">
+                    <span>DELHI</span>
+                    <span>METRO</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <div class="card station-card">
+                
+                <div class="input-wrapper">
+                    <div class="input-group" onclick="toggleDropdown('source')">
+                        <i class="fa-solid fa-circle source-dot"></i>
+                        <input type="text" id="source-input" value="Dashrathpuri" class="station-input" readonly placeholder="Starting stop">
+                    </div>
+                    
+                    <div id="source-dropdown" class="station-dropdown hidden">
+                        <ul id="source-list"></ul>
+                    </div>
+                </div>
+
+                <div class="green-tag">
+                    Nearest Metro Station
+                </div>
+
+                <div class="input-wrapper mt-2">
+                    <div class="input-group" onclick="toggleDropdown('dest')">
+                        <i class="fa-solid fa-location-dot dest-pin"></i>
+                        <input type="text" id="dest-input" value="Central Secretariat" class="station-input" readonly placeholder="Ending stop">
+                    </div>
+
+                    <div id="dest-dropdown" class="station-dropdown hidden">
+                        <ul id="dest-list"></ul>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="sub-label">Frequently Visited</div>
+
+                <div class="ticket-row">
+                    <span class="ticket-label">Number of tickets</span>
+                    
+                    <div class="ticket-select-wrapper">
+                        <select id="ticket-count" onchange="updateFare()">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                        <i class="fa-solid fa-caret-down dropdown-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fare-card">
+                <span class="fare-label">Final Fare</span>
+                <span class="fare-amount" id="display-fare">₹43.0</span>
+            </div>
+
+        </div>
+
+        <div class="fab-mic">
+            <i class="fa-solid fa-microphone"></i>
+        </div>
+
+        <div class="footer-bar">
+            <button class="pay-btn" id="pay-btn" onclick="goToPayment()">Pay ₹43.0</button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. Station Data ---
+        const stations = [
+            "Aali Village", "Aadhaar India Gate", "Adarsh Nagar", "Agra Chowk New Palwal", "AIIMS", "Akshardham", 
+            "Alapur", "Alawpur Chowk", "Anand Vihar", "Andrews Ganj", "Arjan Garh", "Arthala", "Ashok Park Main", 
+            "Ashok Vihar", "Ashram", "Asoda Todran", "Badarpur Border", "Badkhal Mor", "Baghola", "Bahadurgarh City", 
+            "Bahadurgarh Industrial Area", "Bahadurgarh Udyog Vihar", "Bahrola", "Ballabhgarh Sanjay Colony", 
+            "Bamni Khera", "Barakhamba Road", "Basai", "Bata Chowk", "Batla House", "Belvedere Towers", "Botanical Garden", 
+            "Brigadier Hoshiyar Singh", "Central Secretariat", "Chandni Chowk", "Chawri Bazar", "Chhatarpur", "Chirag Delhi", 
+            "Civil Lines", "Cyber Park", "Dabri Mor – Janakpuri South", "Dashrathpuri", "Deepali Chowk", "Delhi Aerocity", 
+            "Delhi Cantonment", "Delhi Gate", "Derawal Nagar", "Dev Colony", "Dhansa Bus Stand", "Dhaula Kuan", "Dholagarh", 
+            "Dilli Haat – INA", "Durgabai Deshmukh South Campus", "Dwarka", "Dwarka Mor", "Dwarka Sector 10", "Dwarka Sector 11", 
+            "Dwarka Sector 12", "Dwarka Sector 13", "Dwarka Sector 14", "Dwarka Sector 21", "Dwarka Sector 26", "Dwarka Sector 28", 
+            "Dwarka Sector 30", "East Azad Nagar", "East Vinod Nagar – Mayur Vihar II", "ESI – Basaidarapur", "Escorts Mujesar", 
+            "Garhi Bohar", "Garhi Sampla", "Ghanta Ghar", "Ghevra", "Ghitorni", "Gokulpuri", "Golf Course", "Govindpuri", 
+            "Greater Kailash", "Green Park", "Guru Dronacharya", "Guru Tegh Bahadur Nagar", "Haiderpur Badli Mor", 
+            "Harkesh Nagar Okhla", "Hauz Khas", "Hindon River", "Huda Chowk Palwal", "IFFCO Chowk", "IGI Airport", "IIT", 
+            "Inderlok", "Indraprastha", "IP Extension", "Ismaila", "Ismaila Haryana Railway Station", "Jaffrabad", 
+            "Jagatpur Village", "Jahangirpuri", "Jakhoda", "Jamia Millia Islamia", "Janakpuri East", "Janakpuri West", 
+            "Jangpura", "Janpath", "Jasola Apollo", "Jasola Vihar Shaheen Bagh", "Jawaharlal Nehru Stadium", "Jhandewalan", 
+            "Jharoda Majra", "Jhilmil", "Johri Enclave", "Jor Bagh", "Kailash Colony", "Kalindi Kunj", "Kalkaji Mandir", 
+            "Kanhaiya Nagar", "Karkarduma Court", "Karkarduma", "Karol Bagh", "Kashmere Gate", "Kaushambi", "Keshav Puram", 
+            "Keshopur", "Khajuri Khas", "Khan Market", "Kharawar", "Khera Sarai", "Kirti Nagar", "Kishangarh", "Kohat Enclave", 
+            "Krishna Chowk", "Krishna Nagar", "Lajpat Nagar", "Lal Qila", "Laxmi Nagar", "Lok Kalyan Marg", "Loni", 
+            "Madhuban Chowk", "Madipur", "Maharaja Surajmal Stadium", "Malviya Nagar", "Mandawali – West Vinod Nagar", 
+            "Mandi House", "Mangolpuri", "Mansarovar Park", "Maujpur – Babarpur", "Maya Enclave", "Mayapuri", 
+            "Mayur Vihar Phase I", "Mayur Vihar Extension", "Meerabagh", "Mewla Maharajpur", "Millennium City Centre", 
+            "Model Town", "Mohan Estate", "Mohan Nagar", "Moolchand", "Moti Nagar", "Mukarba Chowk", "Mundka", 
+            "Mundka Industrial Area", "Munirka", "Nabi Karim", "Najafgarh", "Nangli", "Nangloi", "Nangloi Railway Station", 
+            "Naraina Vihar", "Narela", "Nawada", "Neelam Chowk Ajronda", "Nehru Enclave", "Nehru Place", "Netaji Subhash Place", 
+            "New Ashok Nagar"
+        ];
+
+        // Populate Lists
+        function populateList(listId, inputId, dropdownId) {
+            const listEl = document.getElementById(listId);
+            listEl.innerHTML = '';
+            stations.forEach(station => {
+                const li = document.createElement('li');
+                li.className = 'station-item';
+                li.innerText = station;
+                li.onclick = function(e) {
+                    document.getElementById(inputId).value = station;
+                    document.getElementById(dropdownId).classList.add('hidden');
+                    
+                    // --- NEW: Generate new random fare on station change ---
+                    pickRandomBaseFare(); 
+                    
+                    e.stopPropagation();
+                };
+                listEl.appendChild(li);
+            });
+        }
+
+        populateList('source-list', 'source-input', 'source-dropdown');
+        populateList('dest-list', 'dest-input', 'dest-dropdown');
+
+        // --- 2. Toggle Logic ---
+        function toggleDropdown(type) {
+            const dropdown = document.getElementById(type + '-dropdown');
+            const other = document.getElementById(type === 'source' ? 'dest-dropdown' : 'source-dropdown');
+            if (!other.classList.contains('hidden')) other.classList.add('hidden');
+            dropdown.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.input-group') && !e.target.closest('.station-dropdown')) {
+                document.getElementById('source-dropdown').classList.add('hidden');
+                document.getElementById('dest-dropdown').classList.add('hidden');
+            }
+        });
+
+        // --- 3. RANDOM FARE LOGIC ---
+        let baseFare = 43.0; // Default fallback
+        const possibleFares = [11, 21, 32, 43, 54, 64]; // Your specific list
+
+        function pickRandomBaseFare() {
+            // Pick a random index from 0 to 5
+            const randomIndex = Math.floor(Math.random() * possibleFares.length);
+            baseFare = possibleFares[randomIndex];
+            
+            // Recalculate total immediately
+            updateFare();
+        }
+
+        function updateFare() {
+            const count = document.getElementById('ticket-count').value;
+            const total = (baseFare * count).toFixed(1);
+            
+            document.getElementById('display-fare').innerText = "₹" + total;
+            document.getElementById('pay-btn').innerText = "Pay ₹" + total;
+        }
+
+        function goToPayment() {
+            const currentTotal = document.getElementById('display-fare').innerText.replace('₹', '');
+            localStorage.setItem('chartr_fare', currentTotal);
+            window.location.href = 'index4.html'; 
+        }
+
+        // Initialize with a random fare on page load
+        pickRandomBaseFare();
+
+    </script>
+
+</body>
+</html>

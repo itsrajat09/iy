@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay - PhonePe Mode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style5.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="header">
+            <div class="header-left">
+                <i class="fa-solid fa-arrow-left" onclick="history.back()"></i>
+                <span class="header-title">Pay</span>
+            </div>
+            <div class="header-right">
+                <i class="fa-regular fa-circle-question"></i>
+            </div>
+        </header>
+
+        <div class="main-content">
+            
+            <div class="payee-profile">
+                <div class="avatar-circle">AL</div>
+                <div class="payee-info">
+                    <div class="payee-name">ANAMAR TECHNOLOGIES PRIVATE ...</div>
+                    <div class="payee-upi">ANAMAR.payu@icici</div>
+                </div>
+            </div>
+
+            <div class="info-box amount-box">
+                <span class="rupee-symbol">₹</span>
+                <span class="amount-text" id="display-amount">22.79</span>
+            </div>
+
+            <div class="info-box message-box">
+                <div class="msg-label">Message</div>
+                <div class="msg-value">UPIIntent</div>
+            </div>
+
+            <p class="disclaimer-text">
+                On tapping Pay, money will be deducted from the selected payment mode.
+            </p>
+
+        </div>
+
+        <div class="bottom-sheet">
+            
+            <div class="sheet-header">
+                <span class="total-label">Total payable</span>
+                <div class="total-right">
+                    <span class="total-amount" id="sheet-amount">₹22.79</span>
+                    <i class="fa-solid fa-xmark close-icon" onclick="history.back()"></i>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <div class="section-title">Recommended</div>
+
+                <div class="payment-method-row selected">
+                    <div class="bank-logo-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/SBI-logo.svg/1024px-SBI-logo.svg.png" alt="SBI Logo" class="sbi-img-logo">
+                    </div>
+                    
+                    <div class="method-details">
+                        <div class="bank-name">State Bank of India</div>
+                        <div class="account-info">
+                            <span class="dots">••</span> 3038 
+                            <span class="upi-tag">UPI</span>
+                        </div>
+                    </div>
+
+                    <div class="method-right">
+                        <span class="method-amount" id="bank-amount">₹22.79</span>
+                        <i class="fa-solid fa-circle-check check-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <div class="section-title">Add payment methods</div>
+
+                <div class="action-row">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <span class="action-text">Add bank accounts</span>
+                    <i class="fa-solid fa-chevron-right action-arrow"></i>
+                </div>
+
+                <div class="action-row">
+                    <div class="icon-box">
+                        <i class="fa-regular fa-credit-card"></i>
+                    </div>
+                    <span class="action-text">Add credit line on UPI</span>
+                    <i class="fa-solid fa-chevron-right action-arrow"></i>
+                </div>
+            </div>
+
+            <div class="pay-footer">
+                <button class="purple-pay-btn" id="final-pay-btn" onclick="processPayment()">Pay ₹22.79</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Retrieve Fare on Load ---
+        window.onload = function() {
+            let storedFare = localStorage.getItem('chartr_fare');
+            if (storedFare) {
+                document.getElementById('display-amount').innerText = storedFare;
+                document.getElementById('sheet-amount').innerText = "₹" + storedFare;
+                document.getElementById('bank-amount').innerText = "₹" + storedFare;
+                document.getElementById('final-pay-btn').innerText = "Pay ₹" + storedFare;
+            }
+        };
+
+        // --- 2. Process Payment Simulation ---
+        function processPayment() {
+            let currentText = document.getElementById('final-pay-btn').innerText;
+            const btn = document.getElementById('final-pay-btn');
+            
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+            
+            setTimeout(() => {
+                alert('Payment Request Sent!');
+                btn.innerHTML = currentText; 
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>

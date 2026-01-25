@@ -1,0 +1,156 @@
+/* --- Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #F5F5F5; /* Light grey bg */
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: #ffffff;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header --- */
+.header {
+    background-color: #fff;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.back-icon {
+    font-size: 20px;
+    color: #222;
+    cursor: pointer;
+}
+
+.header-title {
+    font-size: 19px;
+    font-weight: 500;
+    color: #222;
+}
+
+/* --- Content --- */
+.content-area {
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.mt-20 {
+    margin-top: 25px;
+}
+
+/* Active Pass Card */
+.active-pass-card {
+    background-color: #E3F2FD; /* Light Blue Bg */
+    border-radius: 12px;
+    padding: 20px 15px;
+    border: 1px solid #BBDEFB;
+}
+
+.active-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0D47A1; /* Dark Blue Text */
+    margin-bottom: 5px;
+}
+
+.active-sub {
+    font-size: 13px;
+    color: #546E7A;
+}
+
+/* Pass List Cards */
+.pass-card {
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.pass-card:active {
+    background-color: #f9f9f9;
+}
+
+/* Icon Box (D or M) */
+.icon-box {
+    width: 50px;
+    height: 50px;
+    background-color: #B2EBF2; /* Cyan/Teal Light */
+    color: #006064; /* Dark Cyan Text */
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.pass-details {
+    flex: 1;
+}
+
+.pass-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 4px;
+}
+
+.pass-desc {
+    font-size: 12px;
+    color: #757575;
+    margin-bottom: 12px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+}
+
+.badge {
+    background-color: #E8F5E9; /* Light Green */
+    color: #2E7D32; /* Dark Green Text */
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+}

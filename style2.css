@@ -1,0 +1,155 @@
+/* --- Reset & Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #F5F9FC;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* --- Mobile Container --- */
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: #F8F9FA;
+    position: relative;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* --- Header --- */
+.page-header {
+    background-color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.back-btn {
+    font-size: 20px;
+    color: #222;
+    cursor: pointer;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #222;
+}
+
+/* --- Content Wrapper --- */
+.content-wrapper {
+    padding: 25px 20px;
+}
+
+.section-heading {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+/* --- Cards --- */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    text-align: center;
+    border: 1px solid #f0f0f0;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 25px;
+}
+
+/* --- Inputs: Bus Number (Squares) --- */
+.number-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.square-input {
+    width: 55px;
+    height: 55px;
+    background-color: #F5F7FA;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+/* Focus state for active input */
+.square-input:focus {
+    border-color: #4285F4;
+    background-color: #fff;
+}
+
+/* --- Inputs: Route (Full Width) --- */
+.route-input-container {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.full-width-input {
+    width: 100%;
+    padding: 14px 15px;
+    background-color: #F5F7FA;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+}
+
+.full-width-input::placeholder {
+    color: #888;
+}
+
+.full-width-input:focus {
+    border-color: #4285F4;
+    background-color: #fff;
+}
+
+/* --- Helper Text --- */
+.helper-text {
+    font-size: 12px;
+    color: #757575;
+    line-height: 1.4;
+    padding: 0 10px;
+}
+
+/* --- Divider "or" --- */
+.or-divider {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+}

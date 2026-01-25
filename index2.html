@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Bus Ticket - Chartr</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="page-header">
+            <div class="back-btn" onclick="history.back()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <h1 class="header-title">New Bus Ticket</h1>
+        </header>
+
+        <div class="content-wrapper">
+            
+            <h2 class="section-heading">Choose ticket booking flow</h2>
+
+            <div class="card booking-card">
+                <h3 class="card-title">Enter Bus Number</h3>
+                <p class="card-subtitle">Like 1234 for DL 1PC 1234</p>
+                
+                <div class="number-inputs">
+                    <input type="tel" maxlength="1" class="square-input" id="digit-1">
+                    <input type="tel" maxlength="1" class="square-input" id="digit-2">
+                    <input type="tel" maxlength="1" class="square-input" id="digit-3">
+                    <input type="tel" maxlength="1" class="square-input" id="digit-4">
+                </div>
+
+                <p class="helper-text">
+                    Bus number can be found inside bus at multiple places.
+                </p>
+            </div>
+
+            <div class="or-divider">
+                <span>or</span>
+            </div>
+
+            <div class="card booking-card">
+                <h3 class="card-title">Enter Route</h3>
+                
+                <div class="route-input-container">
+                    <input type="text" placeholder="e.g. 534 or 764" class="full-width-input" list="route-options">
+                    
+                    <datalist id="route-options">
+                        <option value="456"></option>
+                        <option value="721"></option>
+                    </datalist>
+                </div>
+
+                <p class="helper-text">
+                    You can ask conductor for current route.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. Bus Number Logic (Focus + Redirect) ---
+        const inputs = document.querySelectorAll('.square-input');
+
+        inputs.forEach((input, index) => {
+            // Handle number entry
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+                
+                // Ensure only numbers are typed
+                if (!/^\d*$/.test(value)) {
+                    e.target.value = '';
+                    return;
+                }
+
+                // Move focus to next box
+                if (value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+
+                // CHECK IF ALL FILLED
+                checkAndRedirect();
+            });
+
+            // Handle Backspace (move back)
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '') {
+                    if (index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                }
+            });
+        });
+
+        function checkAndRedirect() {
+            // Check if every input box has exactly 1 character
+            const allFilled = Array.from(inputs).every(input => input.value.length === 1);
+            
+            if (allFilled) {
+                // REDIRECT HERE: Replace with your actual file name
+                // Example: 'payment_page.html' or 'confirmation.html'
+                setTimeout(() => {
+                    window.location.href = 'index3.html'; 
+                }, 300); // Small delay (300ms) for better user experience
+            }
+        }
+
+
+        // --- 2. Random Routes Logic ---
+        const datalist = document.getElementById('route-options');
+        const min = 306;
+        const max = 721;
+        const numberOfRandoms = 25;
+
+        for (let i = 0; i < numberOfRandoms; i++) {
+            const randomBusNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+            const option = document.createElement('option');
+            option.value = randomBusNumber;
+            datalist.appendChild(option);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI PIN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style8.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="pin-header">
+            <div class="bank-details">
+                <span class="bank-name">State Bank Of India</span>
+                <span class="account-num">XXXX3038</span>
+            </div>
+            <div class="upi-logo-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png" alt="UPI" class="upi-logo">
+            </div>
+        </header>
+
+        <div class="trans-bar">
+            <div class="trans-row">
+                <span class="label">To:</span>
+                <span class="value">ANAMAR TECHNOLOGIES PRIVATE LIMITED</span>
+            </div>
+            <div class="trans-row">
+                <span class="label">Sending:</span>
+                <div class="amount-group">
+                    <span class="value amount" id="pay-amount">₹ 22.79</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-body">
+            
+            <div class="pin-instruction">ENTER 6-DIGIT UPI PIN</div>
+
+            <div class="pin-display">
+                <div class="pin-dot" id="dot-1"></div>
+                <div class="pin-dot" id="dot-2"></div>
+                <div class="pin-dot" id="dot-3"></div>
+                <div class="pin-dot" id="dot-4"></div>
+                <div class="pin-dot" id="dot-5"></div>
+                <div class="pin-dot" id="dot-6"></div>
+            </div>
+
+            <div class="warning-toast">
+                <div class="warn-icon">!</div>
+                <p class="warn-text">
+                    You are transferring money from your State Bank Of India account to ANAMAR TECHNOLOGIES PRIVATE LIMITED
+                </p>
+            </div>
+
+        </div>
+
+        <div class="keypad">
+            <div class="key-row">
+                <div class="key" onclick="pressKey(1)">1</div>
+                <div class="key" onclick="pressKey(2)">2</div>
+                <div class="key" onclick="pressKey(3)">3</div>
+            </div>
+            <div class="key-row">
+                <div class="key" onclick="pressKey(4)">4</div>
+                <div class="key" onclick="pressKey(5)">5</div>
+                <div class="key" onclick="pressKey(6)">6</div>
+            </div>
+            <div class="key-row">
+                <div class="key" onclick="pressKey(7)">7</div>
+                <div class="key" onclick="pressKey(8)">8</div>
+                <div class="key" onclick="pressKey(9)">9</div>
+            </div>
+            <div class="key-row">
+                <div class="key action-key" onclick="pressBackspace()">
+                    <i class="fa-solid fa-delete-left backspace-icon"></i>
+                </div>
+                <div class="key" onclick="pressKey(0)">0</div>
+                <div class="key action-key tick-wrapper" onclick="submitPin()">
+                    <div class="tick-btn" id="submit-btn">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentPin = "";
+        
+        // 1. Load Amount from previous page
+        window.onload = function() {
+            let storedFare = localStorage.getItem('chartr_fare');
+            if(storedFare) {
+                document.getElementById('pay-amount').innerText = "₹ " + storedFare;
+            }
+        };
+
+        // 2. Keypad Logic
+        function pressKey(num) {
+            if (currentPin.length < 6) {
+                currentPin += num;
+                updateDisplay();
+            }
+        }
+
+        function pressBackspace() {
+            if (currentPin.length > 0) {
+                currentPin = currentPin.slice(0, -1);
+                updateDisplay();
+            }
+        }
+
+        // 3. Update Dots and Tick Button
+        function updateDisplay() {
+            // Update dots
+            for (let i = 1; i <= 6; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (i <= currentPin.length) {
+                    dot.classList.add('filled');
+                } else {
+                    dot.classList.remove('filled');
+                }
+            }
+
+            // Update Submit Button State
+            const btn = document.getElementById('submit-btn');
+            if (currentPin.length === 6) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        // 4. Submit Action
+        function submitPin() {
+            if (currentPin.length === 6) {
+                // Here you would go to the success page
+                alert("Payment Successful!");
+                // window.location.href = 'success.html'; // Example
+            }
+        }
+    </script>
+
+</body>
+</html>

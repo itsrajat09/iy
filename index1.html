@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chartr Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="header">
+            <div class="top-bar">
+                <div class="logo">
+                    <i class="fa-solid fa-bars-staggered" style="margin-right: 12px;"></i> 
+                    Chartr
+                </div>
+                <div class="top-actions">
+                    <div class="wallet-pill">
+                        <i class="fa-solid fa-wallet wallet-icon"></i>
+                        <span>&#8377;0.0</span>
+                    </div>
+                    <div class="profile-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-illustration">
+                <img src="https://placehold.co/600x200/FFF5E4/orange?text=City+Illustration" alt="City Background" class="bg-img">
+            </div>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fa-solid fa-location-dot location-pin"></i>
+                <input type="text" placeholder="Where are you going?">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            </div>
+            
+            <div class="recent-locations">
+                <div class="location-item">
+                    <div class="loc-icon-wrapper"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <div class="loc-text">Raja Garden</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+                <div class="divider"></div>
+                <div class="location-item">
+                    <div class="loc-icon-wrapper"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <div class="loc-text">Raja Garden</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <h3 class="section-title">YOUR TRAVEL KIT</h3>
+            
+            <div class="grid-container">
+                <div class="grid-column">
+                   <a href="index2.html"  ><div class="card bus-card">
+                        <div class="card-header">
+                            <span class="card-title">Bus Tickets</span>
+                        </div>
+                        <span class="discount-badge">10% off*</span>
+                        <img src="bus_g.png" alt="Bus" class="card-img bus-img">
+                    </div> </a>
+
+                    <div class="card route-card">
+                        <span class="card-title">Route Info</span>
+                        <img src="route_g.png" alt="Map" class="card-icon-img">
+                    </div>
+                </div>
+
+                <div class="grid-column">
+                    <div class="card metro-card">
+                        <span class="card-title">Metro Ticket</span>
+                        <img src="metro_g.png" alt="Metro" class="card-img metro-img">
+                    </div>
+
+                    <div class="card pass-card">
+                        <span class="card-title">Bus Pass</span>
+                        <div class="pass-icon">
+                            <i class="fa-solid fa-ticket"></i>
+                            <span>PASS</span>
+                        </div>
+                    </div>
+
+                    <div class="card services-card">
+                        <span class="card-title">All Services</span>
+                        <img src="auto_g.png" alt="Auto" class="card-img auto-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <h3 class="section-title" style="margin:0;">AROUND YOU</h3>
+        </div>
+
+        <div class="map-container">
+            <img src="map.jpeg" alt="Map" class="map-img">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #4285F4; font-size: 24px; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <i class="fa-solid fa-circle-dot"></i>
+            </div>
+        </div>
+
+        <div class="stops-list">
+            <div class="stop-item">
+                <div class="stop-icon-box">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="stop-details">
+                    <div class="stop-name">G School Kailash Puri</div>
+                    <div class="stop-direction">Towards G School East Sagar Pur</div>
+                </div>
+                <div class="stop-distance">
+                    <i class="fa-solid fa-arrow-right"></i> 662
+                    <span class="distance-sub">m away</span>
+                </div>
+            </div>
+
+            <div class="stop-item">
+                <div class="stop-icon-box">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="stop-details">
+                    <div class="stop-name">G School East Sagar Pur</div>
+                    <div class="stop-direction">Towards D Block Janak Puri (Pankha...</div>
+                </div>
+                <div class="stop-distance">
+                    <i class="fa-solid fa-arrow-right"></i> 763
+                    <span class="distance-sub">m away</span>
+                </div>
+            </div>
+
+            <div class="stop-item">
+                <div class="stop-icon-box">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="stop-details">
+                    <div class="stop-name">SagarPur Vashisht Park</div>
+                    <div class="stop-direction">Towards Desu Colony Janak Puri</div>
+                </div>
+                <div class="stop-distance">
+                    <i class="fa-solid fa-arrow-right"></i> 985
+                    <span class="distance-sub">m away</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <button class="blue-btn">Show all nearby stops</button>
+        </div>
+
+        <div class="featured-section">
+            <h3 class="section-title">FEATURED FOR YOU</h3>
+            <div class="metro-banner">
+                <img src="metro.png" alt="Metro" class="metro-bg">
+                
+                <div class="metro-content">
+                    <div class="metro-title">Bolo aur Metro ka Ticket le lo! 🎉</div>
+                    <div class="audio-tag">
+                        <i class="fa-solid fa-lines-leaning"></i> |||||||
+                    </div>
+                    <div class="metro-sub">Click to book Metro Ticket.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-message">
+            <div class="footer-title">
+                Har Safar<br>
+                Ka Saathi
+            </div>
+            <div class="footer-sub">
+                Crafted with <i class="fa-solid fa-heart heart-icon"></i> in Dilli
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <div class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <span>Nearby</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-ticket-simple"></i>
+                <span>Ticket & Pass</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-regular fa-circle-question"></i>
+                <span>Help</span>
+            </div>
+        </nav>
+
+    </div>
+
+</body>
+</html>

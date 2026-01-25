@@ -1,0 +1,229 @@
+/* --- Reset & Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #F5F7FA; /* Light grey background used in payment screens */
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: #F5F7FA;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* --- Header --- */
+.header {
+    background-color: #fff;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.back-btn {
+    font-size: 20px;
+    color: #222;
+    cursor: pointer;
+}
+
+.header-title {
+    font-size: 19px;
+    font-weight: 500;
+    color: #222;
+}
+
+/* --- Main Content Area --- */
+.payment-content {
+    padding: 20px;
+}
+
+/* --- Section Labels --- */
+.section-label {
+    font-size: 14px;
+    color: #757575;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 25px;
+}
+/* First label needs less top margin */
+.section-label:first-child {
+    margin-top: 5px;
+}
+
+/* --- General Payment Card Styling --- */
+.payment-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    border: 1px solid #E0E0E0;
+    overflow: hidden; /* Important for rounded corners vs inner content */
+    display: block;
+    text-decoration: none; /* Remove underline from links */
+    margin-bottom: 15px;
+}
+
+/* For cards that are just simple rows (PhonePe, Others) */
+.card-flex-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+/* Hover effect for clickable links */
+.clickable-link:active {
+    background-color: #f9f9f9;
+}
+
+
+.card-left-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Sizing for the PhonePe logo image */
+.payment-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 25%; /* Assuming phonepe logo is circular or icon-like */
+}
+
+/* Sizing for the "Others" card icon */
+.other-icon-box {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #555;
+}
+
+.card-main-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+}
+
+.arrow-icon {
+    font-size: 14px;
+    color: #999;
+}
+
+/* --- WALLET CARD SPECIFIC STYLES --- */
+.wallet-card-container {
+    padding: 0; /* Padding handled inside due to banner */
+}
+
+.warning-banner {
+    background-color: #D32F2F; /* Red color */
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px;
+    width: 100%;
+}
+
+.wallet-inner-content {
+    padding: 15px 20px 20px 20px;
+}
+
+.wallet-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.wallet-left-group {
+    display: flex;
+    gap: 15px;
+}
+
+.wallet-icon-box {
+    font-size: 36px;
+    color: #264E86; /* Deep Blue from previous designs */
+}
+
+.wallet-text-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.wallet-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 4px;
+}
+
+.instant-tag {
+    background-color: #2F80ED;
+    color: white;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.wallet-balance {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Wallet Buttons */
+.wallet-actions-row {
+    display: flex;
+    gap: 15px;
+}
+
+.add-money-btn {
+    flex: 1; /* Makes them take equal width */
+    padding: 12px;
+    background-color: #26A69A; /* Teal color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-money-btn:active {
+    background-color: #219187;
+}
+
+/* --- BANNER --- */
+.banner-link {
+    display: block;
+    margin-top: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.bottom-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}

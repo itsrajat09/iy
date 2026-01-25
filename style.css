@@ -1,0 +1,558 @@
+/* Reset & Basic Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #F5F9FC; /* Light grey-blue background for desktop area */
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px; /* Mobile width constraint */
+    background-color: #fff;
+    position: relative;
+    padding-bottom: 80px; /* Space for bottom nav */
+    overflow-x: hidden;
+}
+
+/* --- Header Section --- */
+.header {
+    background-color: #FFF5E4; /* Cream background matching the screenshot */
+    padding: 15px 20px 60px 20px; /* Extra bottom padding for search overlap */
+    position: relative;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #264E86; /* Deep Blue */
+    display: flex;
+    align-items: center;
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wallet-pill {
+    background-color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #333;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.wallet-icon {
+    color: #4285F4;
+}
+
+.profile-icon {
+    width: 35px;
+    height: 35px;
+    background-color: #000;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.header-illustration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+.bg-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --- Search Container --- */
+.search-container {
+    margin: -40px 15px 20px 15px; /* Negative margin to overlap header */
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 20;
+    padding: 5px 0;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.location-pin {
+    color: #26A69A; /* Teal color */
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    flex-grow: 1;
+    color: #555;
+}
+
+.search-icon {
+    color: #757575;
+    font-size: 18px;
+}
+
+.recent-locations {
+    border-top: 1px solid #f0f0f0;
+}
+
+.location-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+
+.loc-icon-wrapper {
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.loc-icon-wrapper i {
+    font-size: 14px;
+    color: #000;
+}
+
+.loc-text {
+    flex-grow: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: #222;
+}
+
+.arrow-icon {
+    color: #264E86;
+    font-size: 12px;
+}
+
+.divider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin-left: 50px; /* Indent divider */
+    margin-right: 20px;
+}
+
+/* --- Content Area --- */
+.content-area {
+    padding: 0 15px;
+}
+
+.section-title {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+/* --- Grid Layout --- */
+.grid-container {
+    display: flex;
+    gap: 15px;
+}
+
+.grid-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-decoration: none;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    display: block;
+    z-index: 2;
+}
+
+/* Specific Card Styles */
+.bus-card {
+    min-height: 230px; /* Taller card */
+}
+
+.discount-badge {
+    display: inline-block;
+    background-color: #E3F2FD;
+    color: #1976D2;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-top: 5px;
+    width: fit-content;
+}
+
+.bus-img {
+    position: absolute;
+    bottom: 10px;
+    right: -10px;
+    width: 120px;
+}
+
+.metro-card {
+    min-height: 110px;
+}
+
+.metro-img {
+    position: absolute;
+    bottom: 10px;
+    right: -10px;
+    width: 120px;
+}
+
+.pass-card {
+    min-height: 100px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pass-icon {
+    background-color: #E0E0E0;
+    color: #7FB3D5; /* Faded blue */
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.pass-icon i {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.route-card {
+    min-height: 100px;
+}
+
+.card-icon-img {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    border-radius: 8px;
+}
+
+.services-card {
+    min-height: 100px;
+}
+
+.auto-img {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 70px;
+}
+
+/* --- Around You Section (Map & List) --- */
+.section-divider {
+    padding: 20px 15px 10px 15px;
+    background: #fff;
+}
+
+.map-container {
+    width: 100%;
+    height: 200px; 
+    position: relative;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    border-top: 1px solid #f0f0f0;
+}
+
+.map-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+}
+
+/* Bus Stops List */
+.stops-list {
+    background: white;
+    margin-bottom: 10px;
+}
+
+.stop-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.stop-icon-box {
+    width: 40px;
+    height: 40px;
+    background-color: #2E7D32; 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.stop-details {
+    flex: 1;
+    overflow: hidden;
+}
+
+.stop-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stop-direction {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stop-distance {
+    text-align: right;
+    font-size: 14px;
+    color: #4285F4;
+    font-weight: 500;
+    min-width: 60px;
+}
+
+.distance-sub {
+    display: block;
+    font-size: 10px;
+    color: #4285F4;
+    font-weight: 400;
+}
+
+/* Blue "Show All" Button */
+.action-area {
+    padding: 0 15px 20px 15px;
+    background: white;
+}
+
+.blue-btn {
+    width: 100%;
+    background-color: #3569A5;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Featured / Promo Section */
+.featured-section {
+    padding: 10px 15px 10px 15px;
+    background-color: #fff;
+    margin-top: 10px;
+}
+
+.metro-banner {
+    width: 100%;
+    height: 200px;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 15px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.metro-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(0.6);
+}
+
+.metro-content {
+    position: relative;
+    z-index: 2;
+}
+
+.metro-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 38px;
+    max-width: 70%;
+}
+
+.audio-tag {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(66, 133, 244, 0.9);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    margin-bottom: 35px;
+    gap: 5px;
+}
+
+.metro-sub {
+    font-size: 11px;
+    opacity: 0.9;
+    margin-bottom: 35px;
+}
+
+/* --- NEW: Footer Message Section --- */
+.footer-message {
+    padding: 30px 20px 60px 20px; /* Padding bottom for scrolling space */
+    background-color: #fff;
+    text-align: left;
+}
+
+.footer-title {
+    font-size: 36px; /* Large font size for watermark effect */
+    font-weight: 700;
+    color: #F0F2F5; /* Very light grey */
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.footer-sub {
+    font-size: 13px;
+    color: #757575;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.heart-icon {
+    color: #FF5252; /* Red Heart */
+}
+
+/* --- Bottom Navigation --- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0 15px 0;
+    border-top: 1px solid #eee;
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #757575;
+    font-size: 10px;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.nav-item.active {
+    color: #222;
+}
+
+.nav-item.active i {
+    color: #222;
+}
+
+/* Responsive adjust */
+@media (min-width: 481px) {
+    .app-container {
+        margin: 0 auto;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        min-height: 100vh;
+    }
+    .bottom-nav {
+        max-width: 480px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+a{
+    text-decoration: none;
+}

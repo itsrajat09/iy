@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="header">
+            <div class="back-btn" onclick="history.back()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <h1 class="header-title">Ticket Details</h1>
+        </header>
+
+        <div class="ticket-card">
+            <div class="ticket-header-blue">
+                <span class="date" id="live-time">Loading...</span>
+                <span class="bus-id">DL1PD5588</span>
+            </div>
+
+            <div class="card-body">
+                <div class="route-display-row">
+                    <div class="bus-icon-square"><i class="fa-solid fa-bus"></i></div>
+                    <div class="route-text-content clickable-area" onclick="toggleEdit('route')">
+                        <div class="route-label-row">
+                            <span class="mini-label">Route (Tap to change)</span>
+                            <i class="fa-solid fa-pen edit-icon"></i>
+                        </div>
+                        <div class="route-number" id="disp-route">721</div>
+                        <div class="route-desc">towards Kashmere Gate City bus Terminal</div>
+                        <input type="number" id="input-route" class="hidden-input" list="bus-options" onclick="event.stopPropagation()" onchange="saveEdit('route')" onblur="saveEdit('route')">
+                    </div>
+                </div>
+
+                <div class="divider-line"></div>
+
+                <div class="timeline-area">
+                    <div class="dashed-line"></div>
+                    <div class="timeline-row">
+                        <div class="dot-ring"></div>
+                        <div class="text-content-group clickable-area" onclick="toggleEdit('start')">
+                            <div class="label-row"><span class="mini-label">Starting Stop (Tap to change)</span><i class="fa-solid fa-pen edit-icon"></i></div>
+                            <div class="stop-text" id="disp-start">SagarPur Vashisht park</div>
+                            <input type="text" id="input-start" class="hidden-input" list="station-list" onclick="event.stopPropagation()" onchange="saveEdit('start')" onblur="saveEdit('start')">
+                        </div>
+                    </div>
+                    <div class="timeline-row end-row">
+                        <div class="dot-ring"></div>
+                        <div class="text-content-group clickable-area" onclick="toggleEdit('end')">
+                            <div class="label-row"><span class="mini-label">Ending Stop (Tap to change)</span><i class="fa-solid fa-pen edit-icon"></i></div>
+                            <div class="stop-text" id="disp-end">Kashmere Gate City bus Terminal</div>
+                            <input type="text" id="input-end" class="hidden-input" list="station-list" onclick="event.stopPropagation()" onchange="saveEdit('end')" onblur="saveEdit('end')">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cutout-wrapper">
+                <div class="notch left"></div>
+                <div class="dashed-border"></div>
+                <div class="notch right"></div>
+            </div>
+
+            <div class="card-footer">
+                <div class="control-row">
+                    <span class="label">Number of tickets</span>
+                    <div class="stepper">
+                        <button class="step-btn" onclick="updateCount(-1)"><i class="fa-solid fa-minus"></i></button>
+                        <span id="count">1</span>
+                        <button class="step-btn" onclick="updateCount(1)"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="control-row mt-3">
+                    <span class="label">Bus Type</span>
+                    <div class="toggles">
+                        <button class="toggle active" onclick="setBusType('AC', this)">AC</button>
+                        <button class="toggle" onclick="setBusType('Non-AC', this)">Non-AC</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fare-box">
+            <div class="fare-left">
+                <span class="fare-title">Final Fare <i class="fa-solid fa-circle-info"></i></span>
+                <span class="coupon">Coupon Applied</span>
+            </div>
+            <div class="fare-right">
+                <span class="price-text" id="final-fare">₹22.79</span>
+                <span class="coupon-code">WELCOME10</span>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <button class="pay-btn" id="pay-btn-text" onclick="saveAndPay()">Pay ₹22.79</button>
+        </div>
+
+    </div>
+
+    <datalist id="station-list"></datalist>
+    <datalist id="bus-options"></datalist>
+
+    <script>
+        let ticketCount = 1;
+        let currentType = 'AC';
+        const priceAC = 22.79;
+        const priceNonAC = 13.50;
+        let currentTotal = 22.79;
+
+        // Populate Stations
+        const stations = [
+            "ISBT / Kashmiri Gate", "Hastsal Bridge LIG Flats", "Tees Hazari Court", "St Stephen Hospital", 
+            "Ice Factory", "Azad Market", "Bara Hindu Rao", "Model Basti", "Guru Gobind Singh Marg / Faiz Road", 
+            "Faiz Road", "Arya Samaj Road / Pusa Road Petrol Pump", "Karol Bagh Metro Station", 
+            "Rajendra Place / Karol Bagh Telephone Exchange", "East Patel Nagar", "NPL Colony", 
+            "Rajendra Nagar R-Block", "Janak Vihar", "Pusa Quarters", "NASC Dasghara", "Todapur Village", 
+            "Monitoring and Receiving Station", "Inder Puri", "Inder Puri JJ Colony", "Inder Puri (Krishi Kunj)", 
+            "Loha Mandi", "Payal Cinema", "Naraina Vihar", "Maya Puri Depot", "Government Press Mayapuri", 
+            "Metal Forging", "PS Mayapuri", "Bobby Shop", "Gulab House", "Zink Market", 
+            "Lajwanti Garden/ Nangal Rai", "D Block Janakpuri", "Sagarpur / Vashisht Park", "Desu Colony", 
+            "Janak Cinema", "Dabri Crossing", "New Dwarka Road Seetapuri", "Dwarka Puri", "Vijay Enclave", 
+            "Mahaveer Enclave Part II and III", "SFS Flat Sec-2 Power House", "Mahalaxmi Apartment", 
+            "Dwarka Crossing/ Dwarka Sec 1", "Health Centre", "Mangla Puri Terminal"
+        ];
+        const stationListEl = document.getElementById('station-list');
+        stations.forEach(s => { let opt = document.createElement('option'); opt.value = s; stationListEl.appendChild(opt); });
+
+        // Populate Bus Numbers
+        const busListEl = document.getElementById('bus-options');
+        let fixedOpt = document.createElement('option'); fixedOpt.value = "721"; busListEl.appendChild(fixedOpt);
+        for(let i=0; i<20; i++) {
+            let rnd = Math.floor(Math.random() * (900 - 300 + 1)) + 300;
+            if(rnd !== 721) { let opt = document.createElement('option'); opt.value = rnd; busListEl.appendChild(opt); }
+        }
+
+        // Live Time
+        function updateDateTime() {
+            const now = new Date();
+            const day = now.getDate();
+            const month = now.toLocaleString('default', { month: 'short' });
+            const year = now.getFullYear();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12; hours = hours ? hours : 12;
+            document.getElementById('live-time').innerText = `${day} ${month}, ${year} | ${hours}:${minutes} ${ampm}`;
+        }
+
+        // Edit Functions
+        function toggleEdit(type) {
+            document.getElementById(`disp-${type}`).style.display = 'none';
+            const input = document.getElementById(`input-${type}`);
+            input.style.display = 'block';
+            input.value = document.getElementById(`disp-${type}`).innerText;
+            input.focus();
+        }
+
+        function saveEdit(type) {
+            const input = document.getElementById(`input-${type}`);
+            const display = document.getElementById(`disp-${type}`);
+            if(input.value.trim() !== "") { display.innerText = input.value; }
+            input.style.display = 'none'; display.style.display = 'block';
+        }
+
+        // Fare Calculation
+        function calculateFare() {
+            let basePrice = (currentType === 'AC') ? priceAC : priceNonAC;
+            let total = basePrice * ticketCount;
+            currentTotal = total.toFixed(2);
+            document.getElementById('final-fare').innerText = "₹" + currentTotal;
+            document.getElementById('pay-btn-text').innerText = "Pay ₹" + currentTotal;
+        }
+
+        function updateCount(diff) {
+            if (ticketCount + diff > 0) {
+                ticketCount += diff;
+                document.getElementById('count').innerText = ticketCount;
+                calculateFare();
+            }
+        }
+
+        function setBusType(type, el) {
+            currentType = type;
+            document.querySelectorAll('.toggle').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            calculateFare();
+        }
+
+        // --- NAVIGATION LOGIC ---
+        function saveAndPay() {
+            // 1. Save Fare
+            localStorage.setItem('chartr_fare', currentTotal);
+            // 2. Redirect to index4.html
+            window.location.href = 'index4.html';
+        }
+
+        updateDateTime();
+        calculateFare(); 
+        setInterval(updateDateTime, 60000);
+    </script>
+</body>
+</html>
