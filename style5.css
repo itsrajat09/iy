@@ -10,20 +10,21 @@ body {
     background: #000;
     display: flex;
     justify-content: center;
-    height: 100vh; /* Locks body to exact screen height */
-    overflow: hidden; /* IMPORTANT - Completely disables page scrolling */
+    /* Uses dvh to account for mobile browser toolbars dynamically */
+    height: 100dvh; 
+    overflow: hidden; 
 }
 
 /* APP CONTAINER WITH ENTRANCE ANIMATION */
 .app-container {
     width: 100%;
     max-width: 480px;
-    height: 100vh; /* Fixed height */
+    /* Set to 100% of the body height which is locked to 100dvh */
+    height: 100%; 
     background: #000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* Slides in automatically when the page loads */
     animation: slideInRight 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
@@ -32,7 +33,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 18px;
+    /* Added safe-area-inset for modern phone notches */
+    padding: calc(12px + env(safe-area-inset-top)) 18px 12px;
     flex-shrink: 0;
 }
 
@@ -61,7 +63,8 @@ body {
     flex-direction: column;
     justify-content: center; 
     padding: 10px 15px;
-    overflow: hidden; 
+    /* Allows internal scrolling if content overflows without moving header/footer */
+    overflow-y: auto; 
 }
 
 .payee-profile {
@@ -142,7 +145,8 @@ body {
     background: #1E1E1E;
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
-    padding: 15px 0 20px 0; 
+    /* Added safe-area-inset for bottom navigation bars (like iOS home bar) */
+    padding: 15px 0 calc(20px + env(safe-area-inset-bottom)) 0; 
 }
 
 .sheet-header {
@@ -288,15 +292,13 @@ body {
 }
 
 /* =========================================
-   PAGE TRANSITION ANIMATIONS 
+    PAGE TRANSITION ANIMATIONS 
    ========================================= */
 
-/* Triggers when JavaScript adds this class */
 .slide-out-left {
     animation: slideOutLeft 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
 }
 
-/* The actual movement definitions */
 @keyframes slideInRight {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
