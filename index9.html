@@ -1,150 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPI PIN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style9.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPI Payment Interface</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style9.css">
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <header class="pin-header">
-            <div class="bank-details">
-                <span class="bank-name">State Bank Of India</span>
-                <span class="account-num">XXXX3038</span>
-            </div>
-            <div class="upi-logo-container">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png" alt="UPI" class="upi-logo">
-            </div>
-        </header>
-
-        <div class="trans-bar">
-            <div class="trans-row">
-                <span class="label">To:</span>
-                <span class="value">ANAMAR TECHNOLOGIES PRIVATE LIMITED</span>
-            </div>
-            <div class="trans-row">
-                <span class="label">Sending:</span>
-                <div class="amount-group">
-                    <span class="value amount" id="pay-amount">₹ 22.79</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="main-body">
-            
-            <div class="pin-instruction">ENTER 6-DIGIT UPI PIN</div>
-
-            <div class="pin-display">
-                <div class="pin-dot" id="dot-1"></div>
-                <div class="pin-dot" id="dot-2"></div>
-                <div class="pin-dot" id="dot-3"></div>
-                <div class="pin-dot" id="dot-4"></div>
-                <div class="pin-dot" id="dot-5"></div>
-                <div class="pin-dot" id="dot-6"></div>
-            </div>
-
-            <div class="warning-toast">
-                <div class="warn-icon">!</div>
-                <p class="warn-text">
-                    You are transferring money from your State Bank Of India account to ANAMAR TECHNOLOGIES PRIVATE LIMITED
-                </p>
-            </div>
-
-        </div>
-
-        <div class="keypad">
-            <div class="key-row">
-                <div class="key" onclick="pressKey(1)">1</div>
-                <div class="key" onclick="pressKey(2)">2</div>
-                <div class="key" onclick="pressKey(3)">3</div>
-            </div>
-            <div class="key-row">
-                <div class="key" onclick="pressKey(4)">4</div>
-                <div class="key" onclick="pressKey(5)">5</div>
-                <div class="key" onclick="pressKey(6)">6</div>
-            </div>
-            <div class="key-row">
-                <div class="key" onclick="pressKey(7)">7</div>
-                <div class="key" onclick="pressKey(8)">8</div>
-                <div class="key" onclick="pressKey(9)">9</div>
-            </div>
-            <div class="key-row">
-                <div class="key action-key" onclick="pressBackspace()">
-                    <i class="fa-solid fa-delete-left backspace-icon"></i>
-                </div>
-                <div class="key" onclick="pressKey(0)">0</div>
-                <div class="key action-key tick-wrapper" onclick="submitPin()">
-                    <div class="tick-btn" id="submit-btn">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+  <div class="app-container">
+   <div class="header">
+      <div class="bank-info">
+        <span class="upi-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1280px-UPI-Logo-vector.svg.png" width="80" ></span> 
+        <p id="saving"><span id="highlight">SAVINGS:</span> State Bank of India - 3038</p> 
+      </div>
+      <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
-    <script>
-        let currentPin = "";
+    <div class="payment-card">
+      <div class="pay-details">
+        <p class="pay-amount">Pay ₹22.79</p>
+        <p class="pay-to">To ANAMAR TECHNOLOGIES PRIVATE LIMITED</p>
+      </div>
+      <div class="bank-icon-container">
+        <svg width="70" height="28" viewBox="0 0 70 28" xmlns="http://www.w3.org/2000/svg" class="bank-svg">
+          <text x="2" y="20" class="rupee-text">₹</text>
+          <path d="M 18 14 L 28 14 M 24 10 L 28 14 L 24 18" class="arrow-path"/>
+          <rect x="36" y="2" width="24" height="24" rx="6" class="merchant-bg"/>
+          <path d="M 41 10 L 55 10 L 56 12 C 56 13 55 14 54 14 C 53 14 52 13 52 12 C 52 13 51 14 50 14 C 49 14 48 13 48 12 C 48 13 47 14 46 14 C 45 14 44 13 44 12 C 44 13 43 14 42 14 C 41 14 40 13 40 12 L 41 10 Z" class="merchant-roof"/>
+          <rect x="42" y="15" width="12" height="6" rx="1" class="merchant-base"/>
+        </svg>
+      </div>
+    </div> 
+
+    <div class="pin-section">
+      <div class="pin-title">Enter your PIN</div>
+      <div class="pin-dots" id="pin-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="checkmark-container">
+        <div class="checkmark" id="checkmark">
+          <svg viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning">
+      <div class="info"><i class="fa-solid fa-circle-info"></i></div>
+      Never enter your UPI PIN to receive money
+    </div>
+
+    <div class="keypad-container">
+      <div class="keypad" id="keypad">
+        <button onclick="pressKey('1')">1</button>
+        <button onclick="pressKey('2')">2</button>
+        <button onclick="pressKey('3')">3</button>
+        <button onclick="pressKey('4')">4</button>
+        <button onclick="pressKey('5')">5</button>
+        <button onclick="pressKey('6')">6</button>
+        <button onclick="pressKey('7')">7</button>
+        <button onclick="pressKey('8')">8</button>
+        <button onclick="pressKey('9')">9</button>
         
-        // 1. Load Amount from previous page
-        window.onload = function() {
-            let storedFare = localStorage.getItem('chartr_fare');
-            if(storedFare) {
-                document.getElementById('pay-amount').innerText = "₹ " + storedFare;
-            }
-        };
+        <button class="del-btn" onclick="deleteKey()">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"></path>
+            <line x1="18" y1="9" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
+          </svg>
+        </button>
+        
+        <button onclick="pressKey('0')">0</button>
+        <button class="pay-btn" id="pay-btn" onclick="submitPay()">Pay</button>
+      </div>
+    </div>
+  </div>
 
-        // 2. Keypad Logic
-        function pressKey(num) {
-            if (currentPin.length < 6) {
-                currentPin += num;
-                updateDisplay();
-            }
-        }
+  <script>
+    let currentPinLength = 0;
+    const maxPinLength = 6;
+    const dots = document.querySelectorAll('.dot');
+    const checkmark = document.getElementById('checkmark');
+    const payBtn = document.getElementById('pay-btn');
 
-        function pressBackspace() {
-            if (currentPin.length > 0) {
-                currentPin = currentPin.slice(0, -1);
-                updateDisplay();
-            }
-        }
+    function pressKey(num) {
+      if (navigator.vibrate) navigator.vibrate(10); 
+      
+      if (currentPinLength < maxPinLength) {
+        dots[currentPinLength].classList.add('filled');
+        currentPinLength++;
+      }
+      checkCompletion();
+    }
 
-        // 3. Update Dots and Tick Button
-        function updateDisplay() {
-            // Update dots
-            for (let i = 1; i <= 6; i++) {
-                const dot = document.getElementById(`dot-${i}`);
-                if (i <= currentPin.length) {
-                    dot.classList.add('filled');
-                } else {
-                    dot.classList.remove('filled');
-                }
-            }
+    function deleteKey() {
+      if (navigator.vibrate) navigator.vibrate(10);
 
-            // Update Submit Button State
-            const btn = document.getElementById('submit-btn');
-            if (currentPin.length === 6) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        }
+      if (currentPinLength > 0) {
+        currentPinLength--;
+        dots[currentPinLength].classList.remove('filled');
+      }
+      checkCompletion();
+    }
 
-        // 4. Submit Action
-        function submitPin() {
-            if (currentPin.length === 6) {
-                // Here you would go to the success page
-                alert("Payment Successful!");
-                // window.location.href = 'success.html'; // Example
-            }
-        }
-    </script>
+    function checkCompletion() {
+      if (currentPinLength === maxPinLength) {
+        checkmark.classList.add('show');
+        payBtn.classList.add('active');
+      } else {
+        checkmark.classList.remove('show');
+        payBtn.classList.remove('active');
+      }
+    }
+
+    function submitPay() {
+      const payBtn = document.getElementById('pay-btn');
+      
+      // 1. Change the button to show it's working
+      payBtn.style.opacity = "0.7";
+      payBtn.style.pointerEvents = "none"; // Prevents clicking twice
+      
+      // 2. Wait for 1.5 seconds, then go to the next page
+      setTimeout(() => {
+        window.location.href = "index10.html"; // Make sure your second file is named exactly this
+      }, 1500);
+    }
+  </script>
 
 </body>
 </html>

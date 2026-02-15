@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style10.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <div id="connecting-screen" class="screen-view">
+      <div class="loader-container">
+        <div class="loader-track">
+          <div class="loader-thumb"></div>
+        </div>
+        <p class="connecting-text">Connecting Securely</p>
+      </div>
+    </div>
+
+    <div id="success-screen" class="screen-view hidden">
+      
+      <div class="success-header">
+        <div class="check-circle">
+          <svg viewBox="0 0 24 24" class="check-svg">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h1 class="success-title">Payment Successful</h1>
+        <p class="success-datetime" id="current-datetime"></p>
+      </div>
+
+      <div class="receipt-card-container">
+        <div class="receipt-card">
+          
+          <div class="receipt-top-row">
+            <div class="profile-info">
+              <div class="avatar">
+                <img src="https://ui-avatars.com/api/?name=Anamar&background=3b82f6&color=fff" alt="Profile">
+              </div>
+              <div class="name-block">
+                <h2 class="payee-name">ANAMAR TECHNOLO...</h2>
+                <p class="payee-id">+919876543210</p>
+              </div>
+            </div>
+            <button class="split-btn">Split Expense</button>
+          </div>
+
+          <div class="amount-display">₹22.79</div>
+
+          <div class="action-buttons">
+            <button class="action-btn">
+              <i class="fa-solid fa-file-lines purple-icon"></i> View Details
+            </button>
+            <button class="action-btn">
+              <i class="fa-solid fa-share-nodes purple-icon"></i> Share Receipt
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="bottom-action">
+        <button class="done-text-btn" onclick="window.location.href='index.html'">Done</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // 1. Set Exact Date & Time format like the video
+    function formatDateTime() {
+      const now = new Date();
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; 
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      
+      const day = now.getDate();
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
+      
+      return `${day} ${month} ${year} at ${hours}:${minutes} ${ampm}`;
+    }
+
+    document.getElementById('current-datetime').innerText = formatDateTime();
+
+    // 2. Exact Animation Timing (Connecting -> Success)
+    setTimeout(() => {
+      // Hide connecting screen instantly (Hard cut)
+      document.getElementById('connecting-screen').style.display = 'none';
+      
+      // Show success screen and trigger CSS animations
+      const successScreen = document.getElementById('success-screen');
+      successScreen.classList.remove('hidden');
+      successScreen.classList.add('animate-success');
+    }, 2200); // Wait 2.2 seconds before showing success
+  </script>
+
+</body>
+</html>

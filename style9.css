@@ -1,255 +1,617 @@
-/* --- Reset --- */
+/* Import Inter Font for exact app typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ----- RESET & BASE STYLES ----- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: #F5F5F5;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-color: #d1d5db; /* Grey background outside the phone */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
+/* ----- MOBILE FRAME ----- */
 .app-container {
-    width: 100%;
-    max-width: 480px;
-    background-color: #ffffff;
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  width: 360px;
+  height: 760px;
+  background-color: #ffffff;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
-/* --- Header --- */
-.pin-header {
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e0e0e0;
+/* ----- HEADER ----- */
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid #f3f4f6;
 }
 
-.bank-details {
-    display: flex;
-    flex-direction: column;
+.bank-info {
+  font-size: 13px;
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  
+  
+  gap: 8px;
+  font-weight: 500;
 }
-
-.bank-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #000;
-}
-
-.account-num {
-    font-size: 14px;
-    color: #555;
-    margin-top: 2px;
-}
-
-.upi-logo-container {
-    width: 60px;
-}
-
-.upi-logo {
-    width: 100%;
-    height: auto;
-}
-
-/* --- Transaction Bar --- */
-.trans-bar {
-    background-color: #E8EAF6; /* Light bluish-grey from screenshot */
-    padding: 12px 20px;
-}
-
-.trans-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.trans-row:last-child {
-    margin-bottom: 0;
-}
-
-.label {
-    font-size: 13px;
-    color: #555;
-}
-
-.value {
-    font-size: 13px;
-    font-weight: 500;
-    color: #000;
-}
-
-.amount-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* --- Main Body --- */
-.main-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 40px;
-}
-
-.pin-instruction {
-    font-size: 13px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 25px;
-    letter-spacing: 0.5px;
-}
-
-/* PIN Dots */
-.pin-display {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 50px;
-}
-
-.pin-dot {
-    width: 30px;
-    height: 2px; /* Start as a line */
-    background-color: #ccc;
-    transition: all 0.1s;
-}
-
-/* When filled, turns into a dot but in this design usually stays hidden or shows dot. 
-   Screenshot shows lines. Let's make them lines that maybe turn black or show dot above. 
-   Standard UPI shows dots replacing lines or just dots. 
-   Screenshot shows empty lines. I'll render a dot CENTERED on the line if filled. */
-
-.pin-dot.filled {
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background-color: #000;
-    margin: 0 10px; /* Adjust spacing to keep center alignment */
-    transform: translateY(-4px); /* Move up slightly */
-}
-/* Actually, let's stick to simple lines that turn black for "filled" simulation or standard dots */
-.pin-dot {
-    width: 40px;
-    border-bottom: 2px solid #999;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.pin-dot.filled::after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: #000;
-    border-radius: 50%;
-    display: block;
-}
-
-
-/* Warning Toast */
-.warning-toast {
-    background-color: #FFF3E0; /* Light Orange */
-    border: 1px solid #FFE0B2;
-    border-radius: 8px;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 90%;
-    max-width: 350px;
-}
-
-.warn-icon {
-    background-color: #F57C00;
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#highlight{
     font-weight: 700;
-    font-size: 14px;
-    flex-shrink: 0;
+    color:#000000
+}
+.upi-logo {
+  font-weight: 900;
+  font-style: italic;
+  color: #1f2937;
+  font-size: 1px;
+  letter-spacing: -0.5px;
+  justify-content: start;
 }
 
-.warn-text {
-    font-size: 11px;
-    color: #5D4037;
-    line-height: 1.4;
-    text-align: center;
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
 }
 
-/* --- Keypad --- */
+/* ----- PAYMENT DETAILS CARD ----- */
+.payment-card {
+  background-color: #FDF2EE; /* Exact peach/pink background */
+  margin: 20px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pay-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pay-amount {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.pay-to {
+  font-size: 13px;
+  color: #4b5563;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+/* Container Layout */
+.bank-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+
+/* Default SVG background */
+.bank-svg {
+  fill: none;
+}
+
+/* Rupee Symbol Typography */
+.rupee-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  fill: #374151;
+  font-weight: 600;
+}
+
+/* Arrow Styling */
+.arrow-path {
+  stroke: #374151;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Green Merchant Box Background */
+.merchant-bg {
+  fill: #1b873b;
+}
+
+/* White Storefront Inside Box */
+.merchant-roof {
+  fill: white;
+}
+
+.merchant-base {
+  stroke: white;
+  stroke-width: 1.5;
+  fill: none;
+}
+/* ----- PIN ENTRY SECTION ----- */
+.pin-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.pin-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 28px;
+}
+
+.pin-dots {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  height: 16px;
+  align-items: center;
+}
+
+.dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: transparent;
+}
+
+/* Active state for dots */
+.dot.filled {
+  background-color: #1E293B; /* Exact dark navy */
+  border-color: #1E293B;
+  transform: scale(1.15);
+}
+
+/* Checkmark Animation */
+.checkmark-container {
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.checkmark {
+  width: 24px;
+  height: 24px;
+  background-color: #1E293B;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkmark svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: white;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.checkmark.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ----- WARNING TEXT ----- */
+.warning {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.info {
+  width: 16px;
+  height: 16px;
+ 
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: #f2840e;
+}
+
+/* ----- KEYPAD ----- */
+.keypad-container {
+  padding: 0 20px 30px 20px;
+}
+
 .keypad {
-    background-color: #E8EAF6; /* Greyish Blue background for keypad area */
-    padding-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 16px;
 }
 
-.key-row {
-    display: flex;
-    width: 100%;
+.keypad button {
+  background-color: #F3F4F6;
+  border: none;
+  border-radius: 12px;
+  height: 64px;
+  font-size: 26px;
+  font-weight: 500;
+  color: #111827;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.15s ease, transform 0.1s;
 }
 
-.key {
-    flex: 1;
-    height: 65px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: #1A237E; /* Deep Blue text */
-    font-weight: 400;
-    cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.02); /* Subtle borders */
+.keypad button:active {
+  background-color: #e5e7eb;
+  transform: scale(0.96);
 }
 
-.key:active {
-    background-color: rgba(0,0,0,0.05);
+/* Special Keypad Buttons */
+.keypad button.del-btn {
+  background-color: #F3F4F6;
 }
 
-.action-key {
-    background-color: #E8EAF6;
+.keypad button.del-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: #4b5563;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.backspace-icon {
-    font-size: 20px;
-    color: #1A237E;
-    padding: 5px 10px;
-    border-radius: 4px;
-    /* Simulate the 'x' shape box if needed, fontawesome icon is close enough */
+.keypad button.pay-btn {
+  background-color: #1E293B; /* Navy Blue */
+  color: white;
+  border-radius: 32px; /* Pill shape */
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.5; /* Disabled state visually */
+  pointer-events: none; /* Disabled interaction */
+  transition: all 0.2s ease;
 }
 
-/* Tick Button */
-.tick-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.keypad button.pay-btn.active {
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.3);
 }
 
-.tick-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: #9FA8DA; /* Inactive Light Blue */
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    transition: background-color 0.2s;
+.keypad button.pay-btn.active:active {
+  background-color: #0f172a;
+  transform: scale(0.96);
 }
 
-.tick-btn.active {
-    background-color: #1A237E; /* Active Deep Blue */
-    cursor: pointer;
+/* Import Inter Font for exact app typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ----- RESET & BASE STYLES ----- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #d1d5db; /* Grey background outside the phone */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ----- MOBILE FRAME ----- */
+.app-container {
+  width: 360px;
+  height: 760px;
+  background-color: #ffffff;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ----- HEADER ----- */
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.bank-info {
+  font-size: 13px;
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  
+  
+  gap: 8px;
+  font-weight: 500;
+}
+#highlight{
+    font-weight: 700;
+    color:#000000
+}
+.upi-logo {
+  font-weight: 900;
+  font-style: italic;
+  color: #1f2937;
+  font-size: 1px;
+  letter-spacing: -0.5px;
+  justify-content: start;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* ----- PAYMENT DETAILS CARD ----- */
+.payment-card {
+  background-color: #FDF2EE; /* Exact peach/pink background */
+  margin: 20px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pay-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pay-amount {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.pay-to {
+  font-size: 13px;
+  color: #4b5563;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.bank-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bank-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+/* ----- PIN ENTRY SECTION ----- */
+.pin-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.pin-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 28px;
+}
+
+.pin-dots {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  height: 16px;
+  align-items: center;
+}
+
+.dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: transparent;
+}
+
+/* Active state for dots */
+.dot.filled {
+  background-color: #1E293B; /* Exact dark navy */
+  border-color: #1E293B;
+  transform: scale(1.15);
+}
+
+/* Checkmark Animation */
+.checkmark-container {
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.checkmark {
+  width: 24px;
+  height: 24px;
+  background-color: #1E293B;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkmark svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: white;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.checkmark.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ----- WARNING TEXT ----- */
+.warning {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.info {
+  width: 16px;
+  height: 16px;
+ 
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: #f2840e;
+}
+
+/* ----- KEYPAD ----- */
+.keypad-container {
+  padding: 0 20px 30px 20px;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 16px;
+}
+
+.keypad button {
+  background-color: #F3F4F6;
+  border: none;
+  border-radius: 12px;
+  height: 64px;
+  font-size: 26px;
+  font-weight: 500;
+  color: #111827;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.15s ease, transform 0.1s;
+}
+
+.keypad button:active {
+  background-color: #e5e7eb;
+  transform: scale(0.96);
+}
+
+/* Special Keypad Buttons */
+.keypad button.del-btn {
+  background-color: #F3F4F6;
+}
+
+.keypad button.del-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: #4b5563;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.keypad button.pay-btn {
+  background-color: #1E293B; /* Navy Blue */
+  color: white;
+  border-radius: 32px; /* Pill shape */
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.5; /* Disabled state visually */
+  pointer-events: none; /* Disabled interaction */
+  transition: all 0.2s ease;
+}
+
+.keypad button.pay-btn.active {
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.3);
+}
+
+.keypad button.pay-btn.active:active {
+  background-color: #0f172a;
+  transform: scale(0.96);
+}
+
