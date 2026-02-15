@@ -7,14 +7,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style2.css">
+    
+    <style>
+        body {
+            overflow-x: hidden; 
+        }
+    </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-container page-enter">
         
         <header class="page-header">
             <div class="back-btn" onclick="history.back()">
-                <i class="fa-solid fa-arrow-left"></i>
+               <a href="index.html"><i class="fa-solid fa-arrow-left"></i></a> 
             </div>
             <h1 class="header-title">New Bus Ticket</h1>
         </header>
@@ -103,11 +109,17 @@
             const allFilled = Array.from(inputs).every(input => input.value.length === 1);
             
             if (allFilled) {
-                // REDIRECT HERE: Replace with your actual file name
-                // Example: 'payment_page.html' or 'confirmation.html'
+                // Remove focus from keyboard so it drops down smoothly
+                document.activeElement.blur(); 
+
+                // 1. Trigger Slide Out Animation
+                const appContainer = document.querySelector('.app-container');
+                appContainer.classList.add('slide-out-left');
+                
+                // 2. Wait for animation to finish (300ms) before changing URL
                 setTimeout(() => {
                     window.location.href = 'index3.html'; 
-                }, 300); // Small delay (300ms) for better user experience
+                }, 300);
             }
         }
 

@@ -227,3 +227,27 @@ body {
     height: auto;
     display: block;
 }
+/* =========================================
+   PAGE TRANSITION ANIMATIONS 
+   ========================================= */
+
+/* Triggers when the page first loads */
+.page-enter {
+    animation: slideInRight 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Triggers when JavaScript adds this class on click */
+.slide-out-left {
+    animation: slideOutLeft 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+/* The actual movement definitions */
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutLeft {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(-30%); opacity: 0; }
+}

@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style4.css">
+    
+    <style>
+        body {
+            overflow-x: hidden; 
+        }
+    </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-container page-enter">
         
         <header class="header">
             <div class="back-btn" onclick="history.back()">
@@ -23,13 +29,13 @@
 
             <h2 class="section-label">UPI</h2>
             
-            <a href="index5.html" class="payment-card clickable-link card-flex-center">
+            <div class="payment-card clickable-link card-flex-center" onclick="goToPhonePe()">
                 <div class="card-left-group">
                     <img src="phonepay.jpeg" alt="PhonePe" class="payment-logo">
                     <span class="card-main-text">PhonePe</span>
                 </div>
                 <i class="fa-solid fa-chevron-right arrow-icon"></i>
-            </a>
+            </div>
 
 
             <h2 class="section-label">Chartr Wallet</h2>
@@ -80,6 +86,19 @@
 
         </div>
     </div>
+
+    <script>
+        function goToPhonePe() {
+            // 1. Trigger Slide Out Animation
+            const appContainer = document.querySelector('.app-container');
+            appContainer.classList.add('slide-out-left');
+            
+            // 2. Wait for animation to finish (300ms) before changing URL
+            setTimeout(() => {
+                window.location.href = 'index5.html';
+            }, 300);
+        }
+    </script>
 
 </body>
 </html>

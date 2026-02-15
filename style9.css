@@ -11,20 +11,21 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #d1d5db; /* Grey background outside the phone */
+  background-color: #ffffff; /* Changed to white to match the app */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Aligns content to the top instead of the center */
   min-height: 100vh;
+  overflow-x: hidden; /* Prevents scrolling during transition animations */
 }
 
-/* ----- MOBILE FRAME ----- */
+/* ----- MOBILE FRAME (Now Full Screen) ----- */
 .app-container {
-  width: 360px;
-  height: 760px;
+  width: 100%; /* Takes up full width */
+  max-width: 100%; 
+  min-height: 100vh; /* Takes up full height */
   background-color: #ffffff;
-  border-radius: 32px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  /* Removed border-radius and box-shadow to remove the "floating phone" look */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -45,15 +46,15 @@ body {
   color: #6b7280;
   display: flex;
   flex-direction: column;
-  
-  
   gap: 8px;
   font-weight: 500;
 }
-#highlight{
-    font-weight: 700;
-    color:#000000
+
+#highlight {
+  font-weight: 700;
+  color: #000000;
 }
+
 .upi-logo {
   font-weight: 900;
   font-style: italic;
@@ -104,6 +105,7 @@ body {
   text-overflow: ellipsis;
   font-weight: 500;
 }
+
 /* Container Layout */
 .bank-icon-container {
   display: flex;
@@ -147,284 +149,6 @@ body {
   stroke: white;
   stroke-width: 1.5;
   fill: none;
-}
-/* ----- PIN ENTRY SECTION ----- */
-.pin-section {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 40px;
-}
-
-.pin-title {
-  font-size: 17px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 28px;
-}
-
-.pin-dots {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
-  height: 16px;
-  align-items: center;
-}
-
-.dot {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  border: 2px solid #cbd5e1;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: transparent;
-}
-
-/* Active state for dots */
-.dot.filled {
-  background-color: #1E293B; /* Exact dark navy */
-  border-color: #1E293B;
-  transform: scale(1.15);
-}
-
-/* Checkmark Animation */
-.checkmark-container {
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 8px;
-}
-
-.checkmark {
-  width: 24px;
-  height: 24px;
-  background-color: #1E293B;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transform: scale(0);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.checkmark svg {
-  width: 14px;
-  height: 14px;
-  fill: none;
-  stroke: white;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.checkmark.show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* ----- WARNING TEXT ----- */
-.warning {
-  font-size: 12px;
-  color: #6b7280;
-  text-align: center;
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-}
-
-.info {
-  width: 16px;
-  height: 16px;
- 
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 15px;
-  font-weight: bold;
-  color: #f2840e;
-}
-
-/* ----- KEYPAD ----- */
-.keypad-container {
-  padding: 0 20px 30px 20px;
-}
-
-.keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px 16px;
-}
-
-.keypad button {
-  background-color: #F3F4F6;
-  border: none;
-  border-radius: 12px;
-  height: 64px;
-  font-size: 26px;
-  font-weight: 500;
-  color: #111827;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Inter', sans-serif;
-  transition: background-color 0.15s ease, transform 0.1s;
-}
-
-.keypad button:active {
-  background-color: #e5e7eb;
-  transform: scale(0.96);
-}
-
-/* Special Keypad Buttons */
-.keypad button.del-btn {
-  background-color: #F3F4F6;
-}
-
-.keypad button.del-btn svg {
-  width: 26px;
-  height: 26px;
-  fill: none;
-  stroke: #4b5563;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.keypad button.pay-btn {
-  background-color: #1E293B; /* Navy Blue */
-  color: white;
-  border-radius: 32px; /* Pill shape */
-  font-size: 18px;
-  font-weight: 600;
-  opacity: 0.5; /* Disabled state visually */
-  pointer-events: none; /* Disabled interaction */
-  transition: all 0.2s ease;
-}
-
-.keypad button.pay-btn.active {
-  opacity: 1;
-  pointer-events: auto;
-  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.3);
-}
-
-.keypad button.pay-btn.active:active {
-  background-color: #0f172a;
-  transform: scale(0.96);
-}
-
-/* Import Inter Font for exact app typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-/* ----- RESET & BASE STYLES ----- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #d1d5db; /* Grey background outside the phone */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-/* ----- MOBILE FRAME ----- */
-.app-container {
-  width: 360px;
-  height: 760px;
-  background-color: #ffffff;
-  border-radius: 32px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-/* ----- HEADER ----- */
-.header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 24px 20px 16px;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.bank-info {
-  font-size: 13px;
-  color: #6b7280;
-  display: flex;
-  flex-direction: column;
-  
-  
-  gap: 8px;
-  font-weight: 500;
-}
-#highlight{
-    font-weight: 700;
-    color:#000000
-}
-.upi-logo {
-  font-weight: 900;
-  font-style: italic;
-  color: #1f2937;
-  font-size: 1px;
-  letter-spacing: -0.5px;
-  justify-content: start;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: #9ca3af;
-  cursor: pointer;
-  padding: 4px;
-}
-
-/* ----- PAYMENT DETAILS CARD ----- */
-.payment-card {
-  background-color: #FDF2EE; /* Exact peach/pink background */
-  margin: 20px;
-  padding: 18px 20px;
-  border-radius: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.pay-details {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.pay-amount {
-  font-size: 15px;
-  font-weight: 700;
-  color: #111827;
-}
-
-.pay-to {
-  font-size: 13px;
-  color: #4b5563;
-  max-width: 220px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
 }
 
 .bank-icon {
@@ -536,7 +260,6 @@ body {
 .info {
   width: 16px;
   height: 16px;
- 
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -615,3 +338,27 @@ body {
   transform: scale(0.96);
 }
 
+/* =========================================
+   PAGE TRANSITION ANIMATIONS 
+   ========================================= */
+
+/* Triggers when the page first loads */
+.page-enter {
+    animation: slideInRight 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Triggers when JavaScript adds this class on click */
+.slide-out-left {
+    animation: slideOutLeft 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+/* The actual movement definitions */
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutLeft {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(-30%); opacity: 0; }
+}
