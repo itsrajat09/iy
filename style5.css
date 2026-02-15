@@ -4,38 +4,41 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     background: #000;
     display: flex;
     justify-content: center;
-    /* Uses dvh to account for mobile browser toolbars dynamically */
+    /* Locks height to Dynamic Viewport Height to handle browser bars */
     height: 100dvh; 
     overflow: hidden; 
 }
 
-/* APP CONTAINER WITH ENTRANCE ANIMATION */
+/* FULL SCREEN CONTAINER */
 .app-container {
     width: 100%;
     max-width: 480px;
-    /* Set to 100% of the body height which is locked to 100dvh */
-    height: 100%; 
+    height: 100%; /* Fills 100dvh of the body */
     background: #000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    /* Entrance Animation */
     animation: slideInRight 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-/* HEADER (Fixed at top) */
+/* HEADER */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* Added safe-area-inset for modern phone notches */
+    /* Notch support */
     padding: calc(12px + env(safe-area-inset-top)) 18px 12px;
     flex-shrink: 0;
+    background: #000;
 }
 
 .header-left {
@@ -51,19 +54,13 @@ body {
     font-weight: 700;
 }
 
-.header-right {
-    font-size: 18px;
-    color: #aaa;
-}
-
-/* MAIN CONTENT (Flexible middle area) */
+/* MAIN CONTENT */
 .main-content {
     flex: 1; 
     display: flex;
     flex-direction: column;
     justify-content: center; 
     padding: 10px 15px;
-    /* Allows internal scrolling if content overflows without moving header/footer */
     overflow-y: auto; 
 }
 
@@ -87,21 +84,10 @@ body {
     flex-shrink: 0;
 }
 
-.payee-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.payee-upi {
-    font-size: 12px;
-    color: #aaa;
-}
-
 .info-box {
     background: #121212;
     border-radius: 8px;
-    padding: 10px 12px;
+    padding: 12px;
     margin-bottom: 10px;
 }
 
@@ -122,16 +108,6 @@ body {
     color: #fff;
 }
 
-.msg-label {
-    font-size: 11px;
-    color: #777;
-}
-
-.msg-value {
-    font-size: 13px;
-    color: #bbb;
-}
-
 .disclaimer-text {
     font-size: 11px;
     color: #666;
@@ -139,46 +115,28 @@ body {
     text-align: center;
 }
 
-/* BOTTOM SHEET (Fixed at bottom) */
+/* BOTTOM SHEET */
 .bottom-sheet {
     flex-shrink: 0; 
     background: #1E1E1E;
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
-    /* Added safe-area-inset for bottom navigation bars (like iOS home bar) */
-    padding: 15px 0 calc(20px + env(safe-area-inset-bottom)) 0; 
+    /* Handles home-swipe bars on iPhone/Android */
+    padding: 15px 0 calc(10px + env(safe-area-inset-bottom)) 0; 
 }
 
 .sheet-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px 10px 15px;
+    padding: 0 15px 12px 15px;
     border-bottom: 1px solid #333;
-}
-
-.total-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.total-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
 }
 
 .total-amount {
     font-size: 16px;
     font-weight: 700;
     color: #fff;
-}
-
-.close-icon {
-    color: #aaa;
-    font-size: 16px;
-    cursor: pointer;
 }
 
 .section-container {
@@ -194,7 +152,7 @@ body {
 .payment-method-row {
     background: #2C2C2C;
     border-radius: 8px;
-    padding: 10px;
+    padding: 12px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -205,29 +163,6 @@ body {
     height: 28px;
     background: #fff;
     border-radius: 50%;
-    object-fit: cover;
-}
-
-.bank-name {
-    font-size: 13px;
-    color: #fff;
-}
-
-.account-info {
-    font-size: 11px;
-    color: #bbb;
-}
-
-.dots {
-    letter-spacing: 1px;
-}
-
-.upi-tag {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-size: 9px;
-    margin-left: 4px;
 }
 
 .method-right {
@@ -237,41 +172,21 @@ body {
     gap: 8px;
 }
 
-.method-amount {
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-}
-
 .check-icon {
     color: #4CAF50;
-    font-size: 16px;
 }
 
 .action-row {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 0;
+    padding: 10px 15px;
     font-size: 13px;
     color: #fff;
 }
 
-.icon-box {
-    width: 28px;
-    display: flex;
-    justify-content: center;
-    color: #aaa;
-}
-
-.action-arrow {
-    margin-left: auto;
-    color: #555;
-    font-size: 12px;
-}
-
 .pay-footer {
-    padding: 5px 15px;
+    padding: 10px 15px;
 }
 
 .purple-pay-btn {
@@ -280,25 +195,13 @@ body {
     color: white;
     font-size: 15px;
     font-weight: 600;
-    padding: 14px;
+    padding: 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
-.purple-pay-btn:active {
-    background: #5E35B1;
-}
-
-/* =========================================
-    PAGE TRANSITION ANIMATIONS 
-   ========================================= */
-
-.slide-out-left {
-    animation: slideOutLeft 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
-}
-
+/* ANIMATIONS */
 @keyframes slideInRight {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
@@ -307,4 +210,8 @@ body {
 @keyframes slideOutLeft {
     from { transform: translateX(0); opacity: 1; }
     to { transform: translateX(-30%); opacity: 0; }
+}
+
+.slide-out-left {
+    animation: slideOutLeft 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
 }
