@@ -1,7 +1,13 @@
-/* Import Inter Font for exact app typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* ----- RESET & BASE STYLES ----- */
+:root {
+  --primary-purple: #a855f7;
+  --bg-dark: #121212;
+  --card-dark: #1e1e1e;
+  --success-green: #17b340; 
+  --text-grey: #a1a1aa;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,46 +17,40 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #18181b; /* Matches the initial connecting screen color */
+  background-color: var(--bg-dark);
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align to top for full-screen feel */
-  min-height: 100vh;
-  overflow: hidden; /* Prevent scrolling during transitions */
+  align-items: center;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 
-/* ----- FULL SCREEN CONTAINER ----- */
 .app-container {
   width: 100%;
-  max-width: 100%; /* Removes the 360px restriction */
-  height: 100vh;   /* Fills the entire vertical screen */
-  background-color: #111111;
-  display: flex;
-  flex-direction: column;
+  max-width: 450px;
+  height: 100%;
+  background-color: var(--bg-dark);
   position: relative;
   overflow: hidden;
-  /* Removed border-radius and box-shadow for a normal full-screen look */
 }
 
 .screen-view {
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
 }
 
-.hidden {
-  display: none !important;
+.hidden { 
+  display: none !important; 
 }
 
 /* =========================================
-   PHASE 1: CONNECTING SECURELY 
+   PHASE 1: CONNECTING SCREEN
    ========================================= */
 #connecting-screen {
-  background-color: #18181b;
+  background-color: var(--bg-dark);
   justify-content: center;
   align-items: center;
   z-index: 5;
@@ -60,143 +60,153 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
 }
 
 .loader-track {
-  width: 52px;
-  height: 24px;
+  width: 52px; 
+  height: 26px;
   background-color: #ffffff;
-  border-radius: 12px;
-  padding: 2px;
-  display: flex;
-  align-items: center;
+  border-radius: 13px;
+  position: relative;
 }
 
 .loader-thumb {
-  width: 20px;
+  width: 20px; 
   height: 20px;
-  background-color: #a855f7;
+  background-color: var(--primary-purple);
   border-radius: 50%;
-  animation: slideToggle 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  animation: slideToggle 0.7s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
 @keyframes slideToggle {
   0% { transform: translateX(0); }
-  100% { transform: translateX(28px); }
+  100% { transform: translateX(26px); }
 }
 
-.connecting-text {
-  color: #ffffff;
+.connecting-text { 
+  color: #fff; 
+  margin-top: 20px; 
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 500; 
 }
 
 /* =========================================
-   PHASE 2: SUCCESS SCREEN 
+   PHASE 2: SUCCESS SCREEN HEADER
    ========================================= */
 #success-screen {
-  background-color: #17b340;
+  background-color: var(--success-green);
   z-index: 10;
-  justify-content: space-between;
 }
 
 .success-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 70px;
 }
 
 .check-circle {
-  width: 64px;
+  width: 64px; 
   height: 64px;
-  background-color: #ffffff;
+  background: white; 
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
+  display: flex; 
+  justify-content: center; 
   align-items: center;
   margin-bottom: 16px;
   transform: scale(0);
 }
 
 .animate-success .check-circle {
-  animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+  animation: popBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.check-svg {
-  width: 32px;
-  height: 32px;
-  fill: none;
-  stroke: #17b340;
-  stroke-width: 3.5;
+.check-svg { 
+  width: 32px; 
+  height: 32px; 
+  fill: none; 
+  stroke: var(--success-green); 
+  stroke-width: 4; 
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-@keyframes popIn {
+@keyframes popBounce { 
   0% { transform: scale(0); }
   100% { transform: scale(1); }
 }
 
+.success-title, .success-datetime { 
+  opacity: 0; 
+  transform: translateY(15px); 
+  color: white; 
+  text-align: center; 
+}
+
 .success-title {
-  color: #ffffff;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 6px;
-  opacity: 0;
-  transform: translateY(10px);
 }
 
 .success-datetime {
-  color: rgba(255, 255, 255, 0.9);
   font-size: 13px;
-  opacity: 0;
-  transform: translateY(10px);
+  opacity: 0.9;
 }
 
-.animate-success .success-title {
-  animation: fadeUp 0.4s ease-out 0.2s forwards;
+.animate-success .success-title { 
+  animation: fadeUp 0.4s ease-out 0.2s forwards; 
 }
-.animate-success .success-datetime {
-  animation: fadeUp 0.4s ease-out 0.3s forwards;
-}
-
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
+.animate-success .success-datetime { 
+  animation: fadeUp 0.4s ease-out 0.3s forwards; 
 }
 
-/* --- Dark Receipt Card --- */
+@keyframes fadeUp { 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+/* =========================================
+   RECEIPT CARD & SLIDE ANIMATION
+   ========================================= */
 .receipt-card-container {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding-bottom: 20px;
+  /* CHANGED: Swapped center for flex-start to push the card higher up */
+  justify-content: flex-start; 
+  /* ADDED: A 25px gap between the header text and the card */
+  padding-top: 25px; 
+  padding-bottom: 10px;
 }
 
 .receipt-card {
-  background-color: #1a1a1a;
+  background-color: var(--card-dark);
   margin: 0 16px;
   border-radius: 20px;
   padding: 24px 20px;
-  transform: translateY(150%);
+  /* Start completely off-screen at the bottom */
+  transform: translateY(100vh);
   opacity: 0;
 }
 
 .animate-success .receipt-card {
+  /* Smooth decelerating slide-up */
   animation: slideUpCard 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
 }
 
-@keyframes slideUpCard {
-  0% { transform: translateY(100%); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+@keyframes slideUpCard { 
+  0% { transform: translateY(100vh); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; } 
 }
 
+/* Inside the Card Styling */
 .receipt-top-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 24px;
 }
 
@@ -204,6 +214,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0; 
 }
 
 .avatar img {
@@ -211,40 +222,46 @@ body {
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+}
+
+.name-block {
+  min-width: 0;
 }
 
 .payee-name {
   color: #ffffff;
   font-size: 16px;
   font-weight: 600;
-  max-width: 140px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 140px;
 }
 
 .payee-id {
-  color: #a1a1aa;
+  color: var(--text-grey);
   font-size: 13px;
   margin-top: 4px;
 }
 
 .split-btn {
-  background-color: #2e1d3d;
-  color: #c084fc;
-  border: 1px solid #4c286b;
-  padding: 6px 12px;
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  padding: 8px 12px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
-.amount-display {
-  color: #ffffff;
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 28px;
+.amount-display { 
+  color: #fff; 
+  font-size: 38px; 
+  font-weight: 700; 
+  margin-bottom: 30px; 
 }
 
 .action-buttons {
@@ -253,69 +270,50 @@ body {
 }
 
 .action-btn {
-  flex: 1;
-  background-color: #27272a;
-  color: #e4e4e7;
+  flex: 1; 
+  background: #2a2a2a; 
+  color: #fff; 
   border: none;
-  padding: 14px 0;
-  border-radius: 12px;
+  padding: 16px 0; 
+  border-radius: 14px; 
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 600; 
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
 }
 
 .purple-icon {
-  color: #c084fc;
+  color: #d8b4fe;
   font-size: 16px;
 }
 
-.bottom-action {
-  padding-bottom: 24px;
-  display: flex;
-  justify-content: center;
-}
-
-.done-text-btn {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 10px 40px;
-  opacity: 0;
-}
-
-.animate-success .done-text-btn {
-  animation: fadeIn 0.4s ease-out 0.8s forwards;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
 /* =========================================
-   PAGE TRANSITION ANIMATIONS 
+   BOTTOM "DONE" BUTTON
    ========================================= */
-
-.page-enter {
-    animation: slideInRight 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+.bottom-action { 
+  /* Pushes the Done button to the absolute bottom of its container */
+  margin-top: auto;
+  padding: 15px 20px 25px; 
+  text-align: center; 
 }
 
-.slide-out-left {
-    animation: slideOutLeft 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+.done-text-btn { 
+  background: none; 
+  border: none; 
+  color: #fff; 
+  font-size: 17px; 
+  font-weight: 600; 
+  opacity: 0; 
+  cursor: pointer;
 }
 
-@keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+.animate-success .done-text-btn { 
+  animation: fadeIn 0.4s ease forwards 0.8s; 
 }
 
-@keyframes slideOutLeft {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(-30%); opacity: 0; }
+@keyframes fadeIn { 
+  to { opacity: 1; } 
 }

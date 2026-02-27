@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Processing Ticket</title>
+  <link rel="stylesheet" href="redirect.css">
+</head>
+<body>
+
+  <div class="header-section">
+    <div class="logo-ring">
+      <div class="logo-circle">
+        <svg viewBox="0 0 24 24" class="logo-svg">
+          <path d="M5,5 L18,5 C18.55,5 19,5.45 19,6 C19,6.55 18.55,7 18,7 L7,7 L7,11 L16,11 C16.55,11 17,11.45 17,12 C17,12.55 16.55,13 16,13 L7,13 L7,17 L18,17 C18.55,17 19,17.45 19,18 C19,18.55 18.55,19 18,19 L5,19 C4.45,19 4,18.55 4,18 L4,6 C4,5.45 4.45,5 5,5 Z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="status-container">
+    
+    <div class="step">
+      <div class="icon-col">
+        <div class="check-icon">
+          <svg viewBox="0 0 24 24" class="tick-svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="dotted-line"></div>
+      </div>
+      <div class="text-col">
+        <div class="status-title">Initialised</div>
+        <div class="status-desc">Payment is in progress...</div>
+      </div>
+    </div>
+
+    <div class="step hidden" id="success-step">
+      <div class="icon-col">
+        <div class="check-icon">
+          <svg viewBox="0 0 24 24" class="tick-svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+      </div>
+      <div class="text-col">
+        <div class="status-title">Success</div>
+        <div class="status-desc success-text">Your transaction is successful.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-toast" id="toast">
+    <div class="toast-icon">
+      <svg viewBox="0 0 24 24"><path d="M5,5 L18,5 C18.55,5 19,5.45 19,6 C19,6.55 18.55,7 18,7 L7,7 L7,11 L16,11 C16.55,11 17,11.45 17,12 C17,12.55 16.55,13 16,13 L7,13 L7,17 L18,17 C18.55,17 19,17.45 19,18 C19,18.55 18.55,19 18,19 L5,19 C4.45,19 4,18.55 4,18 L4,6 C4,5.45 4.45,5 5,5 Z" /></svg>
+    </div>
+    <div class="toast-text">Payment successful. Generating ticket...</div>
+  </div>
+
+  <script>
+    // Adjust height for mobile browsers
+    function setHeight() {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    }
+    window.addEventListener('resize', setHeight);
+    setHeight();
+
+    // Sequence Animation
+    setTimeout(() => {
+      // 1. Reveal the Success step
+      const successStep = document.getElementById('success-step');
+      successStep.classList.remove('hidden');
+      successStep.classList.add('fade-in');
+
+      // 2. Slide up the bottom toast
+      const toast = document.getElementById('toast');
+      toast.classList.add('show-toast');
+
+      // 3. Redirect to the final Ticket Page after letting the user read the success message
+      setTimeout(() => {
+        document.body.style.opacity = "0"; // Smooth fade out
+        setTimeout(() => {
+          window.location.href = 'index11.html';
+        }, 300);
+      }, 2500);
+
+    }, 1500); // Wait 1.5 seconds on "Initialised" before showing Success
+  </script>
+</body>
+</html>

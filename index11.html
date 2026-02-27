@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Ticket Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style11.css">
+</head>
+<body>
+  <div class="phone">
+    
+    <div class="teal-header">
+      <div class="header-left" id="closeBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <div class="header-center" id="issueBtn">
+        <i class="fa-solid fa-triangle-exclamation warning-icon"></i> Issue with ticket?
+      </div>
+      <div class="header-right">
+        View all tickets
+      </div>
+    </div>
+
+    <div class="main-content">
+      
+      <div class="ticket-card" id="ticketCard">
+        <div class="card-title">Transport Dept. of Delhi</div>
+
+        <div class="row flex-between border-bottom pb-10 mb-10">
+          <span id="ticketCode" class="font-lg">DL1PD4722</span>
+          <span id="amount" class="font-lg">₹4.62</span>
+        </div>
+
+        <div class="row flex-between mb-15">
+          <div class="col">
+            <span class="label">Bus Route</span>
+            <span id="busRoute" class="val">254A</span>
+          </div>
+          <div class="col text-right">
+            <span class="label">Fare</span>
+            <span id="fare" class="val">₹5.0</span>
+          </div>
+        </div>
+
+        <div class="row flex-between mb-15">
+          <div class="col">
+            <span class="label">Booking Time</span>
+            <span id="bookingTime" class="val"></span>
+          </div>
+          <div class="col text-right">
+            <span class="label">Tickets</span>
+            <span class="val">1</span>
+          </div>
+        </div>
+
+        <div class="row mb-15">
+          <div class="col full-width">
+            <span class="label">Starting stop</span>
+            <span id="startStop" class="val">Peera Garhi Metro Station</span>
+          </div>
+        </div>
+
+        <div class="row mb-15">
+          <div class="col full-width">
+            <span class="label">Ending stop</span>
+            <span id="endStop" class="val">Peeragarhi Chowk Flyover</span>
+          </div>
+        </div>
+
+        <div class="row text-center mb-15">
+          <span id="ticketId" class="ticket-id">T23022026bdfcd4d8ac</span>
+        </div>
+
+        <button class="qr-action-btn" onclick="showQR()">
+          <i class="fa-solid fa-qrcode"></i> Show QR code
+        </button>
+
+        <div class="ondc-footer">
+          <span class="ondc-blue">ONDC</span> NETWORK
+        </div>
+      </div>
+
+      <div class="qr-view hidden" id="qrView">
+        <div class="qr-wrapper">
+          <div id="qrcode"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="editPopup" class="qr-popup">
+    <div class="qr-content">
+      <h3>Edit Ticket Details</h3>
+      <input type="text" id="editStart" placeholder="Starting stop" class="edit-input">
+      <input type="text" id="editEnd" placeholder="Ending stop" class="edit-input">
+      <input type="text" id="editTicketCode" placeholder="Ticket code (e.g. DL1PD4722)" class="edit-input">
+      <input type="text" id="editBusRoute" placeholder="Bus route" class="edit-input">
+      <input type="text" id="editAmount" placeholder="Paid Amount (e.g. ₹4.62)" class="edit-input">
+      <input type="text" id="editFare" placeholder="Original Fare (e.g. ₹5.0)" class="edit-input">
+      <input type="text" id="editTicketId" placeholder="Ticket ID" class="edit-input">
+      
+      <button onclick="saveEdit()" class="btn-save">Save Changes</button>
+      <button onclick="closeEdit()" class="btn-cancel">Cancel</button>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+  <script>
+    // 1. Mobile Viewport Height Fix
+    function setVH() {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    window.addEventListener('resize', setVH);
+    setVH();
+
+    // 2. Dynamic Booking Time (12 minutes ago)
+    function generateBookingTime() {
+      const d = new Date();
+      d.setMinutes(d.getMinutes() - 12); // Subtract 12 mins
+
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      let day = d.getDate();
+      let month = months[d.getMonth()];
+      let year = d.getFullYear().toString().slice(-2); // Get last 2 digits of year
+      
+      let hours = d.getHours();
+      let minutes = d.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+
+      // Format: "23 Feb, 26 | 11:08 AM"
+      return `${day} ${month}, ${year} | ${hours}:${minutes} ${ampm}`;
+    }
+    document.getElementById('bookingTime').textContent = generateBookingTime();
+
+    // 3. Header 'X' Button Logic (Handles Back navigation & QR Closing)
+    document.getElementById('closeBtn').addEventListener('click', function() {
+      const qrView = document.getElementById('qrView');
+      const ticketCard = document.getElementById('ticketCard');
+      
+      if (!qrView.classList.contains('hidden')) {
+        // If QR is showing, hide it and show ticket
+        qrView.classList.add('hidden');
+        ticketCard.classList.remove('hidden');
+      } else {
+        // If Ticket is showing, act as a real back button
+        window.location.href = 'index10.html';
+      }
+    });
+
+    // 4. QR Logic
+    function showQR() {
+      const ticketId = document.getElementById('ticketId').textContent.trim();
+      
+      // Hide ticket card, show QR view
+      document.getElementById('ticketCard').classList.add('hidden');
+      document.getElementById('qrView').classList.remove('hidden');
+      
+      // Generate QR
+      document.getElementById('qrcode').innerHTML = ""; 
+      new QRCode(document.getElementById('qrcode'), {
+        text: ticketId,
+        width: 220,
+        height: 220,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+    }
+
+    // 5. Edit Logic (Triggered by "Issue with ticket?")
+    document.getElementById('issueBtn').addEventListener('click', openEdit);
+
+    function openEdit() {
+      document.getElementById('editStart').value = document.getElementById('startStop').textContent.trim();
+      document.getElementById('editEnd').value = document.getElementById('endStop').textContent.trim();
+      document.getElementById('editTicketCode').value = document.getElementById('ticketCode').textContent.trim();
+      document.getElementById('editBusRoute').value = document.getElementById('busRoute').textContent.trim();
+      document.getElementById('editAmount').value = document.getElementById('amount').textContent.trim();
+      document.getElementById('editFare').value = document.getElementById('fare').textContent.trim();
+      document.getElementById('editTicketId').value = document.getElementById('ticketId').textContent.trim();
+      
+      document.getElementById('editPopup').style.display = 'flex';
+    }
+    
+    function closeEdit() {
+      document.getElementById('editPopup').style.display = 'none';
+    }
+
+    function saveEdit() {
+      document.getElementById('startStop').textContent = document.getElementById('editStart').value;
+      document.getElementById('endStop').textContent = document.getElementById('editEnd').value;
+      document.getElementById('ticketCode').textContent = document.getElementById('editTicketCode').value;
+      document.getElementById('busRoute').textContent = document.getElementById('editBusRoute').value;
+      document.getElementById('amount').textContent = document.getElementById('editAmount').value;
+      document.getElementById('fare').textContent = document.getElementById('editFare').value;
+      document.getElementById('ticketId').textContent = document.getElementById('editTicketId').value;
+      
+      closeEdit();
+    }
+  </script>
+</body>
+</html>

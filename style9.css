@@ -7,25 +7,33 @@
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+  user-select: none; /* Prevents text selection highlighting */
 }
 
-body {
+html, body {
   font-family: 'Inter', sans-serif;
-  background-color: #ffffff; /* Changed to white to match the app */
+  background-color: #ffffff;
+  
+  /* Lock body completely to prevent scrolling, bouncing, and zooming */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh; /* Dynamic viewport height */
+  overflow: hidden; 
+  touch-action: none; /* Bans zoom in/out and gestures */
+  
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Aligns content to the top instead of the center */
-  min-height: 100vh;
-  overflow-x: hidden; /* Prevents scrolling during transition animations */
+  align-items: flex-start;
 }
 
-/* ----- MOBILE FRAME (Now Full Screen) ----- */
+/* ----- MOBILE FRAME (Full Screen, No Scroll) ----- */
 .app-container {
-  width: 100%; /* Takes up full width */
-  max-width: 100%; 
-  min-height: 100vh; /* Takes up full height */
+  width: 100%; 
+  max-width: 450px; /* Constrains width on tablets/desktops */
+  height: 100%; /* Fills exact available height */
   background-color: #ffffff;
-  /* Removed border-radius and box-shadow to remove the "floating phone" look */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -35,7 +43,7 @@ body {
 /* ----- HEADER ----- */
 .header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between; /* Pushes the cross icon to the right */
   align-items: center;
   padding: 24px 20px 16px;
   border-bottom: 1px solid #f3f4f6;
@@ -75,7 +83,7 @@ body {
 
 /* ----- PAYMENT DETAILS CARD ----- */
 .payment-card {
-  background-color: #FDF2EE; /* Exact peach/pink background */
+  background-color: #FDF2EE; 
   margin: 20px;
   padding: 18px 20px;
   border-radius: 16px;
@@ -169,11 +177,12 @@ body {
 
 /* ----- PIN ENTRY SECTION ----- */
 .pin-section {
-  flex-grow: 1;
+  flex-grow: 1; /* Absorbs remaining space to prevent overlap */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
+  justify-content: center; /* Centers dots vertically in the space */
+  padding-bottom: 20px;
 }
 
 .pin-title {
@@ -202,7 +211,7 @@ body {
 
 /* Active state for dots */
 .dot.filled {
-  background-color: #1E293B; /* Exact dark navy */
+  background-color: #1E293B; 
   border-color: #1E293B;
   transform: scale(1.15);
 }
@@ -271,7 +280,7 @@ body {
 
 /* ----- KEYPAD ----- */
 .keypad-container {
-  padding: 0 20px 30px 20px;
+  padding: 0 20px 20px 20px;
 }
 
 .keypad {
@@ -284,7 +293,7 @@ body {
   background-color: #F3F4F6;
   border: none;
   border-radius: 12px;
-  height: 64px;
+  height: max(7.5dvh, 54px); /* Dynamic height so it never overflows small screens */
   font-size: 26px;
   font-weight: 500;
   color: #111827;
@@ -317,13 +326,13 @@ body {
 }
 
 .keypad button.pay-btn {
-  background-color: #1E293B; /* Navy Blue */
+  background-color: #1E293B; 
   color: white;
-  border-radius: 32px; /* Pill shape */
+  border-radius: 32px; 
   font-size: 18px;
   font-weight: 600;
-  opacity: 0.5; /* Disabled state visually */
-  pointer-events: none; /* Disabled interaction */
+  opacity: 0.5; 
+  pointer-events: none; 
   transition: all 0.2s ease;
 }
 
@@ -342,17 +351,14 @@ body {
    PAGE TRANSITION ANIMATIONS 
    ========================================= */
 
-/* Triggers when the page first loads */
 .page-enter {
     animation: slideInRight 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-/* Triggers when JavaScript adds this class on click */
 .slide-out-left {
     animation: slideOutLeft 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
 }
 
-/* The actual movement definitions */
 @keyframes slideInRight {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }

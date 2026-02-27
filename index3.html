@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ticket Details</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style3.css">
     
     <style>
+        html, body {
+            touch-action: manipulation;
+        }
         body {
-            overflow-x: hidden; 
+            height: 100dvh;
+            overflow: hidden; 
         }
     </style>
 </head>
@@ -34,14 +38,17 @@
             <div class="card-body">
                 <div class="route-display-row">
                     <div class="bus-icon-square"><i class="fa-solid fa-bus"></i></div>
-                    <div class="route-text-content clickable-area" onclick="toggleEdit('route')">
+                    <div class="route-text-content clickable-area" onclick="toggleEdit(event, 'route')">
                         <div class="route-label-row">
                             <span class="mini-label">Route (Tap to change)</span>
                             <i class="fa-solid fa-pen edit-icon"></i>
                         </div>
                         <div class="route-number" id="disp-route">721</div>
-                        <div class="route-desc">towards Kashmere Gate City bus Terminal</div>
-                        <input type="number" id="input-route" class="hidden-input" list="bus-options" onclick="event.stopPropagation()" onchange="saveEdit('route')" onblur="saveEdit('route')">
+                        
+                        <div class="custom-dropdown-container">
+                            <input type="number" id="input-route" class="hidden-input" autocomplete="off" onkeyup="filterList('route')" onclick="event.stopPropagation()">
+                            <div id="list-route" class="custom-dropdown"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -49,20 +56,30 @@
 
                 <div class="timeline-area">
                     <div class="dashed-line"></div>
+                    
                     <div class="timeline-row">
                         <div class="dot-ring"></div>
-                        <div class="text-content-group clickable-area" onclick="toggleEdit('start')">
+                        <div class="text-content-group clickable-area" onclick="toggleEdit(event, 'start')">
                             <div class="label-row"><span class="mini-label">Starting Stop (Tap to change)</span><i class="fa-solid fa-pen edit-icon"></i></div>
                             <div class="stop-text" id="disp-start">SagarPur Vashisht park</div>
-                            <input type="text" id="input-start" class="hidden-input" list="station-list" onclick="event.stopPropagation()" onchange="saveEdit('start')" onblur="saveEdit('start')">
+                            
+                            <div class="custom-dropdown-container">
+                                <input type="text" id="input-start" class="hidden-input" autocomplete="off" onkeyup="filterList('start')" onclick="event.stopPropagation()">
+                                <div id="list-start" class="custom-dropdown"></div>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="timeline-row end-row">
                         <div class="dot-ring"></div>
-                        <div class="text-content-group clickable-area" onclick="toggleEdit('end')">
+                        <div class="text-content-group clickable-area" onclick="toggleEdit(event, 'end')">
                             <div class="label-row"><span class="mini-label">Ending Stop (Tap to change)</span><i class="fa-solid fa-pen edit-icon"></i></div>
                             <div class="stop-text" id="disp-end">Kashmere Gate City bus Terminal</div>
-                            <input type="text" id="input-end" class="hidden-input" list="station-list" onclick="event.stopPropagation()" onchange="saveEdit('end')" onblur="saveEdit('end')">
+                            
+                            <div class="custom-dropdown-container">
+                                <input type="text" id="input-end" class="hidden-input" autocomplete="off" onkeyup="filterList('end')" onclick="event.stopPropagation()">
+                                <div id="list-end" class="custom-dropdown"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,9 +127,6 @@
 
     </div>
 
-    <datalist id="station-list"></datalist>
-    <datalist id="bus-options"></datalist>
-
     <script>
         let ticketCount = 1;
         let currentType = 'AC';
@@ -120,7 +134,7 @@
         const priceNonAC = 13.50;
         let currentTotal = 22.79;
 
-        // Populate Stations
+        // --- Data Sources ---
         const stations = [
             "ISBT / Kashmiri Gate", "Hastsal Bridge LIG Flats", "Tees Hazari Court", "St Stephen Hospital", 
             "Ice Factory", "Azad Market", "Bara Hindu Rao", "Model Basti", "Guru Gobind Singh Marg / Faiz Road", 
@@ -135,18 +149,14 @@
             "Mahaveer Enclave Part II and III", "SFS Flat Sec-2 Power House", "Mahalaxmi Apartment", 
             "Dwarka Crossing/ Dwarka Sec 1", "Health Centre", "Mangla Puri Terminal"
         ];
-        const stationListEl = document.getElementById('station-list');
-        stations.forEach(s => { let opt = document.createElement('option'); opt.value = s; stationListEl.appendChild(opt); });
 
-        // Populate Bus Numbers
-        const busListEl = document.getElementById('bus-options');
-        let fixedOpt = document.createElement('option'); fixedOpt.value = "721"; busListEl.appendChild(fixedOpt);
+        let buses = ["721"];
         for(let i=0; i<20; i++) {
             let rnd = Math.floor(Math.random() * (900 - 300 + 1)) + 300;
-            if(rnd !== 721) { let opt = document.createElement('option'); opt.value = rnd; busListEl.appendChild(opt); }
+            if(rnd !== 721) buses.push(rnd.toString());
         }
 
-        // Live Time
+        // --- Live Time ---
         function updateDateTime() {
             const now = new Date();
             const day = now.getDate();
@@ -159,23 +169,83 @@
             document.getElementById('live-time').innerText = `${day} ${month}, ${year} | ${hours}:${minutes} ${ampm}`;
         }
 
-        // Edit Functions
-        function toggleEdit(type) {
-            document.getElementById(`disp-${type}`).style.display = 'none';
-            const input = document.getElementById(`input-${type}`);
-            input.style.display = 'block';
-            input.value = document.getElementById(`disp-${type}`).innerText;
-            input.focus();
+        // --- Custom Dropdown Logic ---
+        function populateList(type, items) {
+            const listEl = document.getElementById(`list-${type}`);
+            listEl.innerHTML = '';
+            items.forEach(item => {
+                let div = document.createElement('div');
+                div.className = 'dropdown-item';
+                div.innerText = item;
+                
+                div.onclick = function(e) {
+                    e.stopPropagation(); // Stop click from propagating
+                    document.getElementById(`input-${type}`).value = item;
+                    saveCustomEdit(type, item);
+                };
+                listEl.appendChild(div);
+            });
         }
 
-        function saveEdit(type) {
-            const input = document.getElementById(`input-${type}`);
+        function filterList(type) {
+            const query = document.getElementById(`input-${type}`).value.toLowerCase();
+            const sourceArray = (type === 'route') ? buses : stations;
+            const filtered = sourceArray.filter(i => i.toLowerCase().includes(query));
+            populateList(type, filtered);
+        }
+
+        function toggleEdit(event, type) {
+            event.stopPropagation();
+            
+            // Close any currently open inputs before opening the new one
+            closeAllEdits();
+
             const display = document.getElementById(`disp-${type}`);
-            if(input.value.trim() !== "") { display.innerText = input.value; }
-            input.style.display = 'none'; display.style.display = 'block';
+            const input = document.getElementById(`input-${type}`);
+            const listEl = document.getElementById(`list-${type}`);
+
+            display.style.display = 'none';
+            input.style.display = 'block';
+            input.value = display.innerText;
+            input.focus();
+
+            const sourceArray = (type === 'route') ? buses : stations;
+            populateList(type, sourceArray);
+            listEl.style.display = 'block';
         }
 
-        // Fare Calculation
+        function saveCustomEdit(type, value) {
+            const display = document.getElementById(`disp-${type}`);
+            const input = document.getElementById(`input-${type}`);
+            const listEl = document.getElementById(`list-${type}`);
+            
+            if(value.trim() !== "") { display.innerText = value; }
+            input.style.display = 'none';
+            display.style.display = 'block';
+            listEl.style.display = 'none';
+        }
+
+        function closeAllEdits() {
+            ['route', 'start', 'end'].forEach(type => {
+                const input = document.getElementById(`input-${type}`);
+                const display = document.getElementById(`disp-${type}`);
+                const listEl = document.getElementById(`list-${type}`);
+                
+                if (input.style.display === 'block') {
+                    if(input.value.trim() !== "") display.innerText = input.value;
+                    input.style.display = 'none';
+                    display.style.display = 'block';
+                    listEl.style.display = 'none';
+                }
+            });
+        }
+
+        // Close dropdowns if user clicks outside
+        document.addEventListener('click', function() {
+            closeAllEdits();
+        });
+
+        // --- Fare Calculation & Navigation ---
         function calculateFare() {
             let basePrice = (currentType === 'AC') ? priceAC : priceNonAC;
             let total = basePrice * ticketCount;
@@ -199,26 +269,22 @@
             calculateFare();
         }
 
-        // --- NAVIGATION LOGIC WITH ANIMATION ---
         function saveAndPay() {
-            // 1. Change button appearance slightly so user knows it clicked
             const payBtn = document.getElementById('pay-btn-text');
             payBtn.style.opacity = "0.7";
             payBtn.style.pointerEvents = "none";
 
-            // 2. Save Fare to local storage
             localStorage.setItem('chartr_fare', currentTotal);
             
-            // 3. Trigger Slide Out Animation
             const appContainer = document.querySelector('.app-container');
             appContainer.classList.add('slide-out-left');
             
-            // 4. Wait for animation to finish (300ms) before changing URL
             setTimeout(() => {
                 window.location.href = 'index4.html';
             }, 300);
         }
 
+        // Initialization
         updateDateTime();
         calculateFare(); 
         setInterval(updateDateTime, 60000);

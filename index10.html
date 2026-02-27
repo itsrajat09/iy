@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Payment Successful</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style10.css">
@@ -38,16 +38,16 @@
           <div class="receipt-top-row">
             <div class="profile-info">
               <div class="avatar">
-                <img src="https://ui-avatars.com/api/?name=Anamar&background=3b82f6&color=fff" alt="Profile">
+                <img src="https://ui-avatars.com/api/?name=Anamar&background=c084fc&color=fff&font-size=0.4" alt="Profile">
               </div>
               <div class="name-block">
-                <h2 class="payee-name">ANAMAR TECHNOLO...</h2>
-                <p class="payee-id">+919876543210</p>
+                <h2 class="payee-name" title="ANAMAR TECHNOLOGIES PRIVATE LIMITED">ANAMAR TECHNOLOGIES...</h2>
+                <p class="payee-id">Business Account</p>
               </div>
             </div>
             <button class="split-btn">Split Expense</button>
           </div>
-
+          
           <div class="amount-display">₹22.79</div>
 
           <div class="action-buttons">
@@ -58,20 +58,27 @@
               <i class="fa-solid fa-share-nodes purple-icon"></i> Share Receipt
             </button>
           </div>
-
+          
         </div>
       </div>
 
       <div class="bottom-action">
-        <button class="done-text-btn" onclick="window.location.href='index.html'">Done</button>
+        <button class="done-text-btn" onclick="goToTicket()">Done</button>
       </div>
-
     </div>
 
   </div>
 
   <script>
-    // 1. Set Exact Date & Time format like the video
+    // 1. Dynamic Height Fix for Mobile
+    function setHeight() {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    window.addEventListener('resize', setHeight);
+    setHeight();
+
+    // 2. Format exact date & time like the video
     function formatDateTime() {
       const now = new Date();
       const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -79,30 +86,37 @@
       let hours = now.getHours();
       let minutes = now.getMinutes();
       const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; 
+      
+      hours = hours % 12 || 12; 
+      hours = hours < 10 ? '0' + hours : hours;
       minutes = minutes < 10 ? '0' + minutes : minutes;
       
-      const day = now.getDate();
-      const month = months[now.getMonth()];
-      const year = now.getFullYear();
-      
-      return `${day} ${month} ${year} at ${hours}:${minutes} ${ampm}`;
+      return `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} at ${hours}:${minutes} ${ampm}`;
     }
-
     document.getElementById('current-datetime').innerText = formatDateTime();
 
-    // 2. Exact Animation Timing (Connecting -> Success)
+    // 3. Exact Animation Timing Logic
     setTimeout(() => {
-      // Hide connecting screen instantly (Hard cut)
-      document.getElementById('connecting-screen').style.display = 'none';
+      document.getElementById('connecting-screen').classList.add('hidden');
       
-      // Show success screen and trigger CSS animations
       const successScreen = document.getElementById('success-screen');
       successScreen.classList.remove('hidden');
+      
+      void successScreen.offsetWidth; 
       successScreen.classList.add('animate-success');
-    }, 2200); // Wait 2.2 seconds before showing success
-  </script>
+      
+      // Auto-Redirect seamlessly after 3.5 seconds
+      setTimeout(goToTicket, 2000); 
+    }, 2200);
 
+    // 4. Redirect Function
+    function goToTicket() {
+      document.body.style.transition = "opacity 0.3s ease";
+      document.body.style.opacity = "0";
+      setTimeout(() => {
+        window.location.href = 'redirect.html';
+      }, 300);
+    }
+  </script>
 </body>
 </html>
